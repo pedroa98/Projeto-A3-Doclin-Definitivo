@@ -4,7 +4,7 @@ body {
   display: flex;
   height: 100vh;
   /* Use same gradient as main style */
-  background: linear-gradient(180deg, #1e3a8a 0%, #ffffff 50%, #10b981 100%);
+  background: #e8e4e5;
 }
 
 /* CONTAINER GERAL */

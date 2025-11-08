@@ -2,10 +2,784 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="refresh" content="0; url=login.html">
-  <title>Redirecionando...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doclin - Conectando você ao bem-estar</title>
+  
+  <!-- Favicons -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="favicon.svg">
+  <link rel="manifest" href="site.webmanifest">
+  <meta name="theme-color" content="#667eea">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --primary: #6366f1;
+      --primary-dark: #4f46e5;
+      --secondary: #8b5cf6;
+      --accent: #ec4899;
+      --dark: #1e1b4b;
+      --light: #f8fafc;
+      --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #333;
+      overflow-x: hidden;
+      background: var(--light);
+    }
+
+    /* NAVBAR */
+    .navbar {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 1rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.05);
+      transition: all 0.3s ease;
+    }
+
+    .navbar.scrolled {
+      padding: 0.7rem 5%;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .logo i {
+      font-size: 1.8rem;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      align-items: center;
+      list-style: none;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #555;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .btn {
+      padding: 0.7rem 1.5rem;
+      border: none;
+      border-radius: 50px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary {
+      background: var(--gradient);
+      color: white;
+      box-shadow: 0 4px 15px rgba(102, 102, 241, 0.3);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 25px rgba(102, 102, 241, 0.4);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+    }
+
+    .btn-outline:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    .mobile-menu {
+      display: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: var(--primary);
+    }
+
+    /* HERO SECTION */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6rem 5% 2rem;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -20%;
+      width: 800px;
+      height: 800px;
+      background: var(--gradient);
+      border-radius: 50%;
+      opacity: 0.1;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-30px); }
+    }
+
+    .hero-content {
+      flex: 1;
+      max-width: 600px;
+      z-index: 1;
+    }
+
+    .hero h1 {
+      font-size: 3.5rem;
+      line-height: 1.2;
+      margin-bottom: 1rem;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: fadeInUp 0.8s ease;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: #666;
+      margin-bottom: 2rem;
+      animation: fadeInUp 0.8s ease 0.2s both;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.8s ease 0.4s both;
+    }
+
+    .hero-image {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      animation: fadeInRight 0.8s ease 0.3s both;
+    }
+
+    .hero-image i {
+      font-size: 25rem;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      opacity: 0.8;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInRight {
+      from {
+        opacity: 0;
+        transform: translateX(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+    }
+
+    /* FEATURES SECTION */
+    .features {
+      padding: 5rem 5%;
+      background: white;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-title h2 {
+      font-size: 2.5rem;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+
+    .section-title p {
+      font-size: 1.1rem;
+      color: #666;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .feature-card {
+      padding: 2rem;
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s;
+      text-align: center;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12);
+    }
+
+    .feature-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 1.5rem;
+      background: var(--gradient);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      color: white;
+      box-shadow: 0 10px 30px rgba(102, 102, 241, 0.3);
+    }
+
+    .feature-card h3 {
+      font-size: 1.5rem;
+      color: var(--dark);
+      margin-bottom: 1rem;
+    }
+
+    .feature-card p {
+      color: #666;
+      line-height: 1.6;
+    }
+
+    /* USER TYPES SECTION */
+    .user-types {
+      padding: 5rem 5%;
+      background: var(--light);
+    }
+
+    .types-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .type-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+      transition: all 0.3s;
+    }
+
+    .type-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    }
+
+    .type-header {
+      padding: 3rem 2rem;
+      text-align: center;
+      color: white;
+      position: relative;
+    }
+
+    .type-card:nth-child(1) .type-header {
+      background: var(--gradient);
+    }
+
+    .type-card:nth-child(2) .type-header {
+      background: var(--gradient-2);
+    }
+
+    .type-card:nth-child(3) .type-header {
+      background: var(--gradient-3);
+    }
+
+    .type-header i {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+    }
+
+    .type-header h3 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .type-body {
+      padding: 2rem;
+    }
+
+    .type-body ul {
+      list-style: none;
+      margin-bottom: 1.5rem;
+    }
+
+    .type-body li {
+      padding: 0.7rem 0;
+      color: #555;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .type-body li i {
+      color: var(--primary);
+      font-size: 1.1rem;
+    }
+
+    /* STATS SECTION */
+    .stats {
+      padding: 4rem 5%;
+      background: var(--gradient);
+      color: white;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 3rem;
+      text-align: center;
+    }
+
+    .stat-item h3 {
+      font-size: 3rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-item p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    /* CTA SECTION */
+    .cta {
+      padding: 5rem 5%;
+      background: white;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: 2.5rem;
+      color: var(--dark);
+      margin-bottom: 1rem;
+    }
+
+    .cta p {
+      font-size: 1.2rem;
+      color: #666;
+      margin-bottom: 2rem;
+    }
+
+    /* FOOTER */
+    .footer {
+      padding: 3rem 5%;
+      background: var(--dark);
+      color: white;
+      text-align: center;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+      text-align: left;
+    }
+
+    .footer-section h3 {
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+    }
+
+    .footer-section ul {
+      list-style: none;
+    }
+
+    .footer-section a {
+      color: rgba(255, 255, 255, 0.7);
+      text-decoration: none;
+      display: block;
+      padding: 0.3rem 0;
+      transition: color 0.3s;
+    }
+
+    .footer-section a:hover {
+      color: white;
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      font-size: 1.5rem;
+    }
+
+    .footer-bottom {
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.7);
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: white;
+        flex-direction: column;
+        padding: 2rem;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .nav-links.active {
+        display: flex;
+      }
+
+      .mobile-menu {
+        display: block;
+      }
+
+      .hero {
+        flex-direction: column;
+        text-align: center;
+        padding-top: 6rem;
+      }
+
+      .hero h1 {
+        font-size: 2.5rem;
+      }
+
+      .hero-image i {
+        font-size: 15rem;
+      }
+
+      .hero-buttons {
+        justify-content: center;
+      }
+
+      .features-grid,
+      .types-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
 <body>
-  <p>Redirecionando para a página de login...</p>
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">
+      <i class="fas fa-heart-pulse"></i>
+      <span>Doclin</span>
+    </div>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#inicio">Início</a></li>
+      <li><a href="#recursos">Recursos</a></li>
+      <li><a href="#para-voce">Para Você</a></li>
+      <li><a href="login.html" class="btn btn-outline">Entrar</a></li>
+      <li><a href="register.html" class="btn btn-primary">Cadastrar-se</a></li>
+    </ul>
+    <div class="mobile-menu" id="mobileMenu">
+      <i class="fas fa-bars"></i>
+    </div>
+  </nav>
+
+  <!-- HERO SECTION -->
+  <section class="hero" id="inicio">
+    <div class="hero-content">
+      <h1>Conectando você ao bem-estar</h1>
+      <p>A plataforma completa para agendar serviços de saúde, beleza e bem-estar. Encontre profissionais qualificados perto de você.</p>
+      <div class="hero-buttons">
+        <a href="register.html" class="btn btn-primary">Começar Gratuitamente</a>
+        <a href="#recursos" class="btn btn-outline">Saiba Mais</a>
+      </div>
+    </div>
+    <div class="hero-image">
+      <i class="fas fa-spa"></i>
+    </div>
+  </section>
+
+  <!-- FEATURES SECTION -->
+  <section class="features" id="recursos">
+    <div class="section-title">
+      <h2>Por que escolher o Doclin?</h2>
+      <p>Tudo que você precisa para gerenciar seus serviços de bem-estar</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-calendar-check"></i>
+        </div>
+        <h3>Agendamento Fácil</h3>
+        <p>Agende consultas e serviços em segundos, diretamente pelo aplicativo.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-search-location"></i>
+        </div>
+        <h3>Busca Inteligente</h3>
+        <p>Encontre profissionais por localização, especialidade e avaliações.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-bell"></i>
+        </div>
+        <h3>Notificações em Tempo Real</h3>
+        <p>Receba lembretes de agendamentos e atualizações instantâneas.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-star"></i>
+        </div>
+        <h3>Avaliações Verificadas</h3>
+        <p>Veja avaliações reais de outros clientes antes de agendar.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-chart-line"></i>
+        </div>
+        <h3>Gestão Completa</h3>
+        <p>Dashboard profissional para gerenciar seus clientes e agendas.</p>
+      </div>
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-shield-alt"></i>
+        </div>
+        <h3>Seguro e Confiável</h3>
+        <p>Seus dados protegidos com tecnologia de ponta.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- USER TYPES SECTION -->
+  <section class="user-types" id="para-voce">
+    <div class="section-title">
+      <h2>Feito para você</h2>
+      <p>Escolha o perfil que melhor se adequa às suas necessidades</p>
+    </div>
+    <div class="types-grid">
+      <div class="type-card">
+        <div class="type-header">
+          <i class="fas fa-user"></i>
+          <h3>Cliente</h3>
+          <p>Encontre e agende serviços</p>
+        </div>
+        <div class="type-body">
+          <ul>
+            <li><i class="fas fa-check-circle"></i> Buscar profissionais e estabelecimentos</li>
+            <li><i class="fas fa-check-circle"></i> Agendar serviços facilmente</li>
+            <li><i class="fas fa-check-circle"></i> Gerenciar sua agenda pessoal</li>
+            <li><i class="fas fa-check-circle"></i> Avaliar e favoritar profissionais</li>
+          </ul>
+          <a href="register.html" class="btn btn-primary" style="width: 100%;">Cadastrar como Cliente</a>
+        </div>
+      </div>
+
+      <div class="type-card">
+        <div class="type-header">
+          <i class="fas fa-user-tie"></i>
+          <h3>Profissional</h3>
+          <p>Ofereça seus serviços</p>
+        </div>
+        <div class="type-body">
+          <ul>
+            <li><i class="fas fa-check-circle"></i> Criar perfil profissional</li>
+            <li><i class="fas fa-check-circle"></i> Gerenciar agenda de atendimentos</li>
+            <li><i class="fas fa-check-circle"></i> Acompanhar clientes e histórico</li>
+            <li><i class="fas fa-check-circle"></i> Receber avaliações e crescer</li>
+          </ul>
+          <a href="register.html" class="btn btn-primary" style="width: 100%;">Cadastrar como Profissional</a>
+        </div>
+      </div>
+
+      <div class="type-card">
+        <div class="type-header">
+          <i class="fas fa-building"></i>
+          <h3>Estabelecimento</h3>
+          <p>Gerencie seu negócio</p>
+        </div>
+        <div class="type-body">
+          <ul>
+            <li><i class="fas fa-check-circle"></i> Gerenciar múltiplos profissionais</li>
+            <li><i class="fas fa-check-circle"></i> Dashboard completo de gestão</li>
+            <li><i class="fas fa-check-circle"></i> Controle total de agendamentos</li>
+            <li><i class="fas fa-check-circle"></i> Aumentar visibilidade do negócio</li>
+          </ul>
+          <a href="register.html" class="btn btn-primary" style="width: 100%;">Cadastrar Estabelecimento</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS SECTION -->
+  <section class="stats">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <h3>1000+</h3>
+        <p>Profissionais Cadastrados</p>
+      </div>
+      <div class="stat-item">
+        <h3>5000+</h3>
+        <p>Agendamentos Realizados</p>
+      </div>
+      <div class="stat-item">
+        <h3>4.9★</h3>
+        <p>Avaliação Média</p>
+      </div>
+      <div class="stat-item">
+        <h3>50+</h3>
+        <p>Cidades Atendidas</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA SECTION -->
+  <section class="cta">
+    <h2>Pronto para começar?</h2>
+    <p>Junte-se a milhares de usuários que já estão cuidando melhor de si mesmos</p>
+    <div class="hero-buttons" style="justify-content: center;">
+      <a href="register.html" class="btn btn-primary">Criar Conta Gratuita</a>
+      <a href="login.html" class="btn btn-outline">Já tenho conta</a>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section">
+        <h3><i class="fas fa-heart-pulse"></i> Doclin</h3>
+        <p>Conectando pessoas ao bem-estar através da tecnologia.</p>
+        <div class="social-links">
+          <a href="#"><i class="fab fa-facebook"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-linkedin"></i></a>
+        </div>
+      </div>
+      <div class="footer-section">
+        <h3>Empresa</h3>
+        <ul>
+          <li><a href="#">Sobre Nós</a></li>
+          <li><a href="#">Carreiras</a></li>
+          <li><a href="#">Blog</a></li>
+          <li><a href="#">Contato</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Recursos</h3>
+        <ul>
+          <li><a href="login.html">Entrar</a></li>
+          <li><a href="register.html">Cadastrar-se</a></li>
+          <li><a href="#">Central de Ajuda</a></li>
+          <li><a href="#">FAQ</a></li>
+        </ul>
+      </div>
+      <div class="footer-section">
+        <h3>Legal</h3>
+        <ul>
+          <li><a href="#">Termos de Uso</a></li>
+          <li><a href="#">Política de Privacidade</a></li>
+          <li><a href="#">Política de Cookies</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Doclin. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+
+  <script>
+    const mobileMenu = document.getElementById('mobileMenu');
+    const navLinks = document.getElementById('navLinks');
+    const navbar = document.querySelector('.navbar');
+
+    mobileMenu.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+      const icon = mobileMenu.querySelector('i');
+      icon.classList.toggle('fa-bars');
+      icon.classList.toggle('fa-times');
+    });
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          navLinks.classList.remove('active');
+          const icon = mobileMenu.querySelector('i');
+          icon.classList.add('fa-bars');
+          icon.classList.remove('fa-times');
+        }
+      });
+    });
+  </script>
 </body>
 </html>

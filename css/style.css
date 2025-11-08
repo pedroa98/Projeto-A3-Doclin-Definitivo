@@ -1,14 +1,14 @@
-/* Minimal styles for login/register pages */
-.body, body { font-family: Arial, sans-serif; color: #333; margin: 0; }
-/* Background gradiente: azul -> branco -> verde */
+@import url('https://fonts.googleapis.com/css2?family=Archivo:wght@600&display=swap');
+
+body, body { font-family: 'Archivo', sans-serif; color: #333; margin: 0; }
 body {
-	background: linear-gradient(180deg, #1e3a8a 0%, #ffffff 50%, #10b981 100%);
+	background: #e8e4e5;
 	min-height: 100vh;
 }
 .container { max-width: 420px; margin: 72px auto; background: #fff; padding: 24px; border-radius: 8px; box-shadow: 0 6px 18px rgba(19,39,67,0.08); }
-h2 { margin-top: 0; }
+h2, h3 { margin-top: 0; text-align: center; }
 input, select, button { width: 100%; padding: 10px 12px; margin: 8px 0; box-sizing: border-box; border: 1px solid #dfe6ef; border-radius: 6px; }
-button { background: #2b7cff; color: #fff; border: none; cursor: pointer; }
+button { background: #296480; color: #fff; border: none; cursor: pointer; }
 button:hover { background: #1a66e6; }
 a { color: #2b7cff; text-decoration: none; }
 #message { margin-top: 12px; font-weight: 600; }
