@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agenda do Cliente - AutoCuidado</title>
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/main.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+  <script src="https://unpkg.com/parse/dist/parse.min.js"></script>
+  <script src="js/auth.js" defer></script>
+  <script src="js/cliente-agenda.js" defer></script>
+  <!-- jsPDF + AutoTable preloaded -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+  <style>
+    body { margin:0; font-family: 'Poppins', sans-serif; display:flex; min-height:100vh; background:#f4f6f8 }
+    .sidebar { width:240px; background:#2c3e50; color:#fff; display:flex; flex-direction:column; padding:20px }
+    .sidebar a { color:#fff; text-decoration:none; padding:10px; border-radius:6px; margin-bottom:8px }
+    .sidebar a.active, .sidebar a:hover { background:#3498db }
+    .main-content{ flex:1; padding:30px }
+    #calendar{ background:white; border-radius:12px; padding:15px; max-width:1000px; margin:0 auto }
+    .btn-bar { text-align:center; margin-top:20px }
+    .btn { background:#3498db; color:white; border:none; padding:10px 16px; border-radius:6px; cursor:pointer; margin:0 8px }
+  </style>
+</head>
+<body>
+  <div class="sidebar">
+    <h2>AutoCuidado</h2>
+    <a href="cliente-dashboard.html" class="active">🏠 Meu Painel</a>
+    <a href="meus-profissionais.html">Meus Profissionais</a>
+    <a href="editar-perfil-cliente.html">Editar Perfil</a>
+    <a href="login.html" onclick="localStorage.clear()">Logout</a>
+  </div>
+  <div class="main-content">
+    <h1>📅 Minhas Consultas</h1>
+    <div id="calendar"></div>
+    <div class="btn-bar">
+      <button class="btn" id="btnExport">📤 Exportar Semana (PDF)</button>
+    </div>
+  </div>
+</body>
+</html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>

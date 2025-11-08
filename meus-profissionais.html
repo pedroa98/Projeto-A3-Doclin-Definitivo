@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meus Profissionais - AutoCuidado</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://unpkg.com/parse/dist/parse.min.js"></script>
+  <script src="js/auth.js" defer></script>
+  <script src="js/meus-profissionais.js" defer></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      display: flex;
+      min-height: 100vh;
+      background: #f4f6f8;
+    }
+
+    /* ==== MENU LATERAL ==== */
+    .sidebar {
+      width: 240px;
+      background: #2c3e50;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .sidebar a {
+      color: #fff;
+      text-decoration: none;
+      padding: 10px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      transition: background 0.2s;
+    }
+
+    .sidebar a:hover,
+    .sidebar a.active {
+      background: #3498db;
+    }
+
+    /* ==== CONTEÚDO ==== */
+    .main-content {
+      flex: 1;
+      padding: 30px;
+      overflow-y: auto;
+    }
+
+    .main-content h1 {
+      margin-bottom: 20px;
+      color: #2c3e50;
+    }
+
+    #listaProfissionais {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 20px;
+    }
+
+    .prof-card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.2s, box-shadow 0.2s;
+      position: relative;
+    }
+
+    .prof-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .prof-card img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 10px;
+    }
+
+    .prof-card h3 {
+      margin: 8px 0 4px;
+      color: #2c3e50;
+    }
+
+    .prof-card p {
+      margin: 2px 0;
+      color: #555;
+    }
+
+    .saldo {
+      background: #e8f5e9;
+      color: #2e7d32;
+      border-radius: 6px;
+      padding: 5px 8px;
+      margin-top: 8px;
+      display: inline-block;
+      font-weight: 500;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 8px 12px;
+      border: none;
+      border-radius: 6px;
+      background: #3498db;
+      color: white;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.2s;
+    }
+
+    .btn:hover {
+      background: #2980b9;
+    }
+
+    #mensagem {
+      text-align: center;
+      color: #555;
+      margin-top: 20px;
+    }
+
+    .btn-back {
+      background: #27ae60;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      padding: 8px 14px;
+      cursor: pointer;
+      transition: background 0.2s;
+      float: right;
+      margin-bottom: 10px;
+    }
+
+    .btn-back:hover {
+      background: #229954;
+    }
+  </style>
+</head>
+<body>
+  <!-- ==== MENU LATERAL DO CLIENTE ==== -->
+  <div class="sidebar">
+    <h2>AutoCuidado</h2>
+    <a href="cliente-dashboard.html">📅 Principal</a>
+    <a href="cliente-agenda.html">📅 Minha Agenda</a>
+    <a href="lista-servicos.html">🔍 Lista de Serviços</a>
+    <a href="meus-profissionais.html" class="active">👨‍⚕️ Meus Profissionais</a>
+    <a href="editar-perfil-cliente.html">✏️ Editar Perfil</a>
+    <a href="login.html" onclick="localStorage.clear()">🚪 Logout</a>
+  </div>
+
+  <!-- ==== CONTEÚDO PRINCIPAL ==== -->
+  <div class="main-content">
+    <button class="btn-back" onclick="window.location.href='cliente-dashboard.html'">⬅️ Voltar ao Dashboard</button>
+    <h1>👨‍⚕️ Meus Profissionais e Estabelecimentos</h1>
+
+    <div id="listaProfissionais"></div>
+    <p id="mensagem"></p>
+  </div>
+</body>
+</html>

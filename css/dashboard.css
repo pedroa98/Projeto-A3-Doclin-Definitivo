@@ -1,0 +1,168 @@
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  display: flex;
+  height: 100vh;
+  /* Use same gradient as main style */
+  background: linear-gradient(180deg, #1e3a8a 0%, #ffffff 50%, #10b981 100%);
+}
+
+/* CONTAINER GERAL */
+.dashboard-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+}
+
+/* MENU LATERAL */
+.sidebar {
+  background: rgba(15, 23, 42, 0.9); /* darker translucent panel */
+  width: 240px;
+  color: white;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-radius: 0 12px 12px 0;
+  box-shadow: 0 8px 24px rgba(2,6,23,0.25);
+}
+
+.sidebar h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #ecf0f1;
+}
+
+/* BOTÕES DO MENU */
+.menu-btn {
+  display: block;
+  background: linear-gradient(90deg,#2b7cff,#1e90ff);
+  color: white;
+  text-decoration: none;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(2,6,23,0.12);
+}
+
+.menu-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 26px rgba(2,6,23,0.18);
+}
+
+.logout {
+  background: linear-gradient(90deg,#ff6b6b,#ff3b3b);
+}
+
+.logout:hover {
+  filter: brightness(0.95);
+}
+
+/* CONTEÚDO PRINCIPAL */
+.main-content {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+}
+
+.main-content h1 {
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+/* CALENDÁRIO */
+#calendar {
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Propaganda / Ads */
+/* Propaganda / Ads */
+.ads-area, #ads-area {
+  background: rgba(255,255,255,0.95);
+  border-radius: 10px;
+  padding: 16px;
+  box-shadow: 0 6px 18px rgba(2,6,23,0.06);
+  margin-bottom: 18px;
+}
+
+.ad-card {
+  background: linear-gradient(90deg,#ffffff,#f7fbff);
+  border: 1px solid #e6eef6;
+  padding: 12px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+}
+
+.ad-card h3 {
+  margin: 0 0 6px 0;
+}
+
+/* Cards de cliente usados em telas de 'Meus Clientes' */
+.cliente-card {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  padding: 12px;
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.cliente-card img {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  margin: 0 auto 8px auto;
+}
+
+.cliente-card h3 { margin: 8px 0; color: #2c3e50; }
+.cliente-card p { margin: 4px 0; color: #555; }
+
+/* Notificações badge (usado no menu lateral) */
+#notif-badge {
+  background: #e74c3c;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-weight: 700;
+  min-width: 28px;
+  display: inline-block;
+  text-align: center;
+}
+
+/* Notification item styles */
+.notif-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+  background: linear-gradient(180deg,#ffffff,#f7fbff);
+  border: 1px solid rgba(14,42,77,0.06);
+  padding: 10px 12px;
+  border-radius: 10px;
+  margin-bottom: 10px;
+}
+.notif-body {
+  flex: 1 1 auto;
+  color: #1f2937;
+}
+.notif-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-end;
+}
+.notif-actions button {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+.notif-actions .mark-read { background:#22c55e; color:white }
+.notif-actions .remove-notif { background:#ef4444; color:white }

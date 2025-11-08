@@ -1,0 +1,57 @@
+/* Minimal styles for login/register pages */
+.body, body { font-family: Arial, sans-serif; color: #333; margin: 0; }
+/* Background gradiente: azul -> branco -> verde */
+body {
+	background: linear-gradient(180deg, #1e3a8a 0%, #ffffff 50%, #10b981 100%);
+	min-height: 100vh;
+}
+.container { max-width: 420px; margin: 72px auto; background: #fff; padding: 24px; border-radius: 8px; box-shadow: 0 6px 18px rgba(19,39,67,0.08); }
+h2 { margin-top: 0; }
+input, select, button { width: 100%; padding: 10px 12px; margin: 8px 0; box-sizing: border-box; border: 1px solid #dfe6ef; border-radius: 6px; }
+button { background: #2b7cff; color: #fff; border: none; cursor: pointer; }
+button:hover { background: #1a66e6; }
+a { color: #2b7cff; text-decoration: none; }
+#message { margin-top: 12px; font-weight: 600; }
+
+/* Profile / listing cards (lista-servicos) */
+.card, .prof-card {
+	position: relative;
+	background: #fff;
+	border-radius: 12px;
+	box-shadow: 0 6px 18px rgba(19,39,67,0.06);
+	padding: 16px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	text-align: center;
+	transition: transform 0.18s ease, box-shadow 0.18s ease;
+	min-height: 220px;
+}
+.card:hover, .prof-card:hover { transform: translateY(-6px); box-shadow: 0 12px 30px rgba(19,39,67,0.12); }
+
+.card img, .prof-card img {
+	width: 110px;
+	height: 110px;
+	border-radius: 50%;
+	object-fit: cover;
+	margin-bottom: 12px;
+	flex-shrink: 0;
+}
+
+.card-content {
+	width: 100%;
+}
+
+.card h3 { margin: 0 0 6px; font-size: 1.05rem; color: #1f2937; }
+.descricao { color: #6b7280; font-size: 0.95rem; line-height: 1.2; margin: 0; max-height: 3.6em; overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; line-clamp: 3; }
+.preco { margin-top: 10px; font-weight: 700; color: #16a34a; }
+.tipos { margin-top: 8px; color: #4b5563; font-size: 0.9rem; }
+
+/* Badge for establishments */
+.card .badge, .prof-card .badge { position: absolute; top: 12px; left: 12px; background:#ffb020; color:#fff; padding:6px 8px; border-radius:6px; font-size:12px; font-weight:700 }
+
+/* Make the card content more balanced on wider screens */
+@media (min-width: 900px) {
+	.card, .prof-card { min-height: 240px; }
+	.card img, .prof-card img { width: 120px; height: 120px; }
+}

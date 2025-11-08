@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar Perfil - Profissional</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://unpkg.com/parse/dist/parse.min.js"></script>
+  <script src="js/auth.js" defer></script>
+  <script src="js/editar-perfil-profissional.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <h2>Editar Perfil - Profissional</h2>
+
+    <form id="perfilForm">
+      <label>Nome:</label>
+      <input type="text" id="nome" required>
+  <label>Descrição / Especialidade:</label>
+      <textarea id="descricao" placeholder="Ex: Psicólogo clínico"></textarea>
+
+  <label>Tipo (ex: Psicólogo, Nutricionista):</label>
+  <input type="text" id="tipo" placeholder="Ex: Psicólogo">
+
+  <label>E-mail de Contato:</label>
+  <input type="email" id="email" placeholder="contato@exemplo.com">
+
+  <label>Telefone:</label>
+  <input type="tel" id="telefone" placeholder="(00) 00000-0000">
+
+      <label>Número do Conselho:</label>
+      <input type="text" id="conselho">
+
+      <label>Endereço:</label>
+      <input type="text" id="endereco">
+
+      <label>Atende Online:</label>
+      <select id="online">
+        <option value="true">Sim</option>
+        <option value="false">Não</option>
+      </select>
+
+      <label>Atende Presencial:</label>
+      <select id="presencial">
+        <option value="true">Sim</option>
+        <option value="false">Não</option>
+      </select>
+
+      <label>Preço da Consulta (R$):</label>
+      <input type="number" id="preco" min="0" step="0.01">
+
+      <label>Foto de Perfil:</label>
+      <input type="file" id="foto" accept="image/*">
+      <img id="previewFoto" alt="Prévia da foto" width="150">
+      <button id="removerFoto" type="button" style="display:none;">Remover Foto</button>
+
+      <button type="submit">Salvar</button>
+    </form>
+
+    <button id="voltarDashboard" type="button">⬅️ Voltar ao Dashboard</button>
+    <p id="mensagem"></p>
+  </div>
+</body>
+</html>

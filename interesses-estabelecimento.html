@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interessados - Estabelecimento</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <script src="https://unpkg.com/parse/dist/parse.min.js"></script>
+  <script src="js/auth.js" defer></script>
+  <script src="js/interesses-estabelecimento.js" defer></script>
+</head>
+<body>
+  <div class="dashboard-container">
+    <aside class="sidebar">
+      <h2>AutoCuidado</h2>
+      <nav>
+        <a href="meus-clientes-estabelecimento.html" class="menu-btn">👥 Meus Clientes</a>
+        <a href="interesses-estabelecimento.html" class="menu-btn">💬 Interessados</a>
+        <a href="estabelecimento-agenda.html" class="menu-btn">📅 Agenda</a>
+        <a href="editar-perfil-estabelecimento.html" class="menu-btn">✏️ Editar Perfil</a>
+        <a href="login.html" class="menu-btn logout">🔒 Logout</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <h1>Interessados</h1>
+
+      <!-- NOTIFICAÇÕES -->
+      <section id="notifications-area">
+        <h2>Notificações</h2>
+        <div id="notifications-controls">
+          <button id="refresh-notifications">Atualizar</button>
+          <button id="mark-all-read">Marcar todas como lidas</button>
+        </div>
+        <ul id="notifications-list"></ul>
+        <div id="no-notifications" style="display:none">Nenhuma notificação</div>
+      </section>
+
+      <section id="requests-area">
+        <p>Mensagens e solicitações de vínculo enviadas por clientes.</p>
+        <ul id="lista-interesses"></ul>
+        <p id="mensagem"></p>
+      </section>
+
+      <section id="ads-area">
+        <h2>Propaganda</h2>
+        <div class="ad-card">
+          <h3>Promoção</h3>
+          <p>Coloque anúncios aqui.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
+

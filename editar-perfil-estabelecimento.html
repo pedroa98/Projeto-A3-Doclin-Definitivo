@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar Perfil - Estabelecimento</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://unpkg.com/parse/dist/parse.min.js"></script>
+  <script src="js/auth.js" defer></script>
+  <script src="js/editar-perfil-estabelecimento.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <h2>Editar Perfil - Estabelecimento</h2>
+
+    <form id="perfilForm">
+      <label>Nome do Estabelecimento:</label>
+      <input type="text" id="nome" required>
+
+      <label>Descrição / Serviços:</label>
+      <textarea id="descricao" placeholder="Ex: Sala de terapia, estética..."></textarea>
+
+      <label>Endereço (obrigatório):</label>
+  <input type="text" id="endereco" required>
+
+  <label>Telefone:</label>
+  <input type="tel" id="telefone" placeholder="(00) 00000-0000">
+
+  <label>E-mail de Contato:</label>
+  <input type="email" id="email" placeholder="contato@exemplo.com">
+
+  <label>CNPJ (opcional):</label>
+  <input type="text" id="cnpj" placeholder="00.000.000/0000-00">
+
+      <label>Atende Online:</label>
+      <select id="online">
+        <option value="true">Sim</option>
+        <option value="false">Não</option>
+      </select>
+
+      <label>Preço Médio (R$):</label>
+      <input type="number" id="preco" min="0" step="0.01">
+
+      <label>Foto do Estabelecimento:</label>
+      <input type="file" id="foto" accept="image/*">
+      <img id="previewFoto" alt="Prévia da foto" width="150" style="display:none">
+      <button id="removerFoto" type="button" style="display:none;">Remover Foto</button>
+
+      <button type="submit">Salvar</button>
+    </form>
+
+    <button id="voltarDashboard" type="button">← Voltar ao Dashboard</button>
+    <p id="mensagem"></p>
+  </div>
+
+</body>
+</html>

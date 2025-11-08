@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - AutoCuidado</title>
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Parse SDK -->
+  <script src="https://unpkg.com/parse/dist/parse.min.js"></script>
+
+  <!-- Configuração + inicialização -->
+  <script src="js/auth.js" defer></script>
+
+  <!-- Lógica de login -->
+  <script src="js/login.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <h2>Login</h2>
+    <h3>Bem Vindo a Doclin</h3>
+
+    <form id="loginForm">
+      <input type="text" id="username" placeholder="E-mail ou usuário" required>
+      <input type="password" id="password" placeholder="Senha" required>
+      <button type="submit">Entrar</button>
+    </form>
+
+    <p>Não tem conta? <a href="register.html">Cadastre-se</a></p>
+    <p id="message"></p>
+  </div>
+</body>
+</html>

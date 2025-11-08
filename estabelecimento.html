@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Estabelecimento - AutoCuidado</title>
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/main.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+  <script src="https://unpkg.com/parse/dist/parse.min.js"></script>
+  <script src="js/auth.js" defer></script>
+  <script src="js/estabelecimento-cliente-agenda.js" defer></script>
+
+  <style>
+    /* reuse styles from profissional.html minimal */
+    body { font-family: "Poppins", sans-serif; background:#f4f6f8; display:flex; min-height:100vh; }
+    .sidebar { width:240px; background:#2c3e50; color:#fff; padding:20px }
+    .main-content { flex:1; padding:30px }
+    .perfil-container { background:#fff; padding:25px; border-radius:12px; max-width:700px; margin:auto; text-align:center }
+    img { width:140px; height:140px; border-radius:12px; object-fit:cover }
+    .sidebar {
+      width: 240px;
+      background: #2c3e50;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .sidebar a {
+      color: #fff;
+      text-decoration: none;
+      padding: 10px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      transition: background 0.2s;
+    }
+
+    .sidebar a:hover,
+    .sidebar a.active {
+      background: #3498db;
+    }
+  </style>
+
+</head>
+<body>
+
+  <div class="sidebar">
+    <h2>AutoCuidado</h2>
+    <a href="cliente-dashboard.html">🏠 Dashboard</a>
+    <a href="lista-servicos.html" class="active">🔍 Lista de Serviços</a>
+    <a href="editar-perfil-cliente.html">✏️ Editar Perfil</a>
+    <a href="login.html" onclick="localStorage.clear()">🔒 Logout</a>
+  </div>
+
+  <div class="main-content">
+    <div class="perfil-container" id="perfilEstabelecimento">
+      <p>Carregando estabelecimento...</p>
+    </div>
+
+    <div id="calendar"></div>
+    <p id="mensagem"></p>
+  </div>
+
+
+</body>
+
+</html>

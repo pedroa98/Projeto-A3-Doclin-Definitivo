@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interessados - Profissional</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://unpkg.com/parse/dist/parse.min.js"></script>
+  <script src="js/auth.js" defer></script>
+  <script src="js/interesses-profissional.js" defer></script>
+
+  <style>
+    body { margin: 0; font-family: "Poppins", sans-serif; display: flex; min-height: 100vh; background: #f4f6f8; }
+    .sidebar { width: 240px; background: #2c3e50; color: #fff; display: flex; flex-direction: column; padding: 20px; }
+    .sidebar a { color: #fff; text-decoration: none; padding: 10px; border-radius: 6px; margin-bottom: 8px; }
+    .sidebar a.active, .sidebar a:hover { background: #3498db; }
+    .main-content { flex: 1; padding: 30px; overflow-y: auto; }
+
+    .top-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+    .btn-back { background: #27ae60; color: white; border: none; border-radius: 6px; padding: 8px 14px; cursor: pointer; transition: background 0.2s; }
+    .btn-back:hover { background: #229954; }
+
+    .interessado-card { background: #fff; border-radius: 12px; padding: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); margin-bottom: 15px; }
+    .btn { padding: 6px 10px; border: none; border-radius: 6px; cursor: pointer; color: #fff; margin: 3px; }
+    .btn-green { background: #27ae60; }
+    .btn-red { background: #e74c3c; }
+    .btn-green:hover { background: #219150; }
+    .btn-red:hover { background: #c0392b; }
+  </style>
+</head>
+
+<body>
+  <div class="sidebar">
+    <h2>AutoCuidado</h2>
+    <a href="profissional-agenda.html">📅 Agenda</a>
+    <a href="interesses-profissional.html" class="active">💬 Interessados</a>
+    <a href="meus-clientes.html">👥 Meus Clientes</a>
+    <a href="editar-perfil-profissional.html">✏️ Editar Perfil</a>
+    <a href="login.html" onclick="localStorage.clear()">🚪 Logout</a>
+  </div>
+
+  <div class="main-content">
+    <div class="top-bar">
+      <h1>💬 Clientes Interessados</h1>
+      <button class="btn-back" onclick="window.location.href='profissional-dashboard.html'">⬅️ Voltar ao Dashboard</button>
+    </div>
+
+    <div id="listaInteressados"></div>
+    <p id="mensagem"></p>
+  </div>
+</body>
+</html>

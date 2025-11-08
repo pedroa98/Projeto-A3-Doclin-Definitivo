@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro - AutoCuidado</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://unpkg.com/parse/dist/parse.min.js"></script>
+  <script src="js/auth.js" defer></script>
+  <script src="js/register.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <h2>Cadastro</h2>
+    <h3>Bem Vindo a Doclin</h3>
+
+    <form id="registerForm">
+      <input type="email" id="username" name="email" placeholder="E-mail" required>
+      <input type="password" id="password" name="password" placeholder="Senha" required>
+      <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirmar senha" required>
+      <input type="text" id="name" name="name" placeholder="Nome completo" required>
+
+      <select id="role" name="role" required>
+        <option value="">Selecione o tipo de usuário</option>
+        <option value="cliente">Cliente</option>
+        <option value="profissional">Profissional</option>
+        <option value="estabelecimento">Estabelecimento</option>
+      </select>
+
+      <button type="submit">Cadastrar</button>
+    </form>
+
+    <p>Já tem conta? <a href="login.html">Faça login</a></p>
+    <p id="message"></p>
+  </div>
+</body>
+</html>

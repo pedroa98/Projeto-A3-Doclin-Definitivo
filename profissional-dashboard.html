@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Profissional</title>
+
+  <!-- FullCalendar -->
+    <!-- FullCalendar removido: agenda não é exibida na área principal -->
+
+  <!-- Parse SDK -->
+  <script src="https://unpkg.com/parse/dist/parse.min.js"></script>
+
+  <!-- Estilos -->
+  <link rel="stylesheet" href="css/dashboard.css">
+  <script src="js/auth.js"></script>
+</head>
+<body>
+  <div class="dashboard-container">
+    <!-- MENU LATERAL -->
+    <aside class="sidebar">
+      <h2>AutoCuidado</h2>
+      <nav>
+        <a href="meus-clientes.html" class="menu-btn">👥 Meus Clientes</a>
+        <a href="interesses-profissional.html" class="menu-btn">💬 Interessados</a>
+        <a href="profissional-agenda.html" class="menu-btn">📅 Agenda</a>
+        <a href="editar-perfil-profissional.html" class="menu-btn">✏️ Editar Perfil</a>
+        <a href="login.html" class="menu-btn logout">🚪 Logout</a>
+      </nav>
+      <div style="margin-top:12px;color:#fff">Notificações: <span id="notif-badge">0</span></div>
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="main-content">
+      <h1>Meu Painel</h1>
+
+      <!-- NOTIFICAÇÕES -->
+      <section id="notifications-area">
+        <h2>Notificações</h2>
+        <div id="notifications-controls">
+          <button id="refresh-notifications">Atualizar</button>
+          <button id="mark-all-read">Marcar todas como lidas</button>
+          <button id="remove-read">Remover lidas</button>
+        </div>
+        <ul id="notifications-list"></ul>
+        <div id="no-notifications" style="display:none">Nenhuma notificação</div>
+      </section>
+
+      <!-- AREA DE PROPAGANDA (substitui agenda) -->
+      <section id="ads-area">
+        <h2>Propaganda</h2>
+        <div class="ad-card">
+          <h3>Oferta para Profissionais</h3>
+          <p>Upgrade: anúncios e destaques para profissionais parceiros.</p>
+        </div>
+        <div class="ad-card">
+          <h3>Curso de Atualização</h3>
+          <p>Curso online com 10% de desconto para usuários ativos.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="js/profissional-dashboard.js"></script>
+</body>
+</html>

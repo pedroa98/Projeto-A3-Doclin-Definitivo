@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meus Clientes - Estabelecimento</title>
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/dashboard.css">
+  <script src="https://unpkg.com/parse/dist/parse.min.js"></script>
+  <script src="js/auth.js" defer></script>
+  <script src="js/meus-clientes-estabelecimento.js" defer></script>
+</head>
+<body>
+  <div class="dashboard-container">
+    <aside class="sidebar">
+      <h2>AutoCuidado</h2>
+      <nav>
+        <a href="meus-clientes-estabelecimento.html" class="menu-btn">👥 Meus Clientes</a>
+        <a href="interesses-estabelecimento.html" class="menu-btn">💬 Interessados</a>
+        <a href="estabelecimento-agenda.html" class="menu-btn">📅 Agenda</a>
+        <a href="editar-perfil-estabelecimento.html" class="menu-btn">✏️ Editar Perfil</a>
+        <a href="login.html" class="menu-btn logout">🔒 Logout</a>
+      </nav>
+    </aside>
+
+    <main class="main-content">
+      <h1>Meus Clientes</h1>
+
+      <!-- NOTIFICAÇÕES NO TOPO -->
+      <section id="notifications-area">
+        <h2>Notificações</h2>
+        <div id="notifications-controls">
+          <button id="refresh-notifications">Atualizar</button>
+          <button id="mark-all-read">Marcar todas como lidas</button>
+          <button id="remove-read">Remover lidas</button>
+        </div>
+        <ul id="notifications-list"></ul>
+        <div id="no-notifications" style="display:none">Nenhuma notificação</div>
+      </section>
+
+      <!-- LISTA DE CLIENTES -->
+      <section id="clients-area">
+        <div id="listaClientes"></div>
+        <p id="mensagem"></p>
+      </section>
+
+      <!-- PROPAGANDA EM BAIXO -->
+      <section id="ads-area">
+        <h2>Propaganda</h2>
+        <div class="ad-card">
+          <h3>Parcerias</h3>
+          <p>Coloque sua propaganda aqui.</p>
+        </div>
+      </section>
+    </main>
+  </div>
+</body>
+</html>

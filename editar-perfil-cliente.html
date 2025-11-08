@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar Perfil - Cliente</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="https://unpkg.com/parse/dist/parse.min.js"></script>
+  <script src="js/auth.js" defer></script>
+  <script src="js/editar-perfil-cliente.js" defer></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f7f8fa;
+    }
+    .container {
+      max-width: 500px;
+      margin: 40px auto;
+      background: white;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background: #3498db;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #2980b9;
+    }
+    #removerFoto { background: #e74c3c; }
+    #removerFoto:hover { background: #c0392b; }
+    #voltarDashboard { background: #2ecc71; }
+    #voltarDashboard:hover { background: #27ae60; }
+    img { border-radius: 10px; margin-top: 10px; display:none; }
+    #mensagem { text-align: center; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Editar Perfil - Cliente</h2>
+
+    <form id="perfilForm">
+      <label>Nome:</label>
+      <input type="text" id="nome" required>
+
+      <label>Telefone:</label>
+      <input type="text" id="telefone">
+
+  <label>E-mail de Contato:</label>
+  <input type="email" id="email">
+
+      <label>Data de Nascimento:</label>
+      <input type="date" id="nascimento">
+
+      <p>Idade: <span id="idade">-</span> anos</p>
+
+      <label>Foto de Perfil:</label>
+      <input type="file" id="foto" accept="image/*">
+      <img id="previewFoto" alt="Prévia da foto" width="150">
+      <button id="removerFoto" type="button" style="display:none;">Remover Foto</button>
+
+      <button type="submit">Salvar</button>
+    </form>
+
+    <button id="voltarDashboard" type="button">⬅️ Voltar ao Dashboard</button>
+    <p id="mensagem"></p>
+  </div>
+</body>
+</html>

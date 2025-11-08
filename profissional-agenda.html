@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agenda do Profissional - AutoCuidado</title>
+
+  <!-- FullCalendar -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/main.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+
+  <!-- jsPDF (preload) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <!-- jsPDF AutoTable -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
+  <!-- Parse SDK -->
+  <script src="https://unpkg.com/parse/dist/parse.min.js"></script>
+  <script src="js/auth.js" defer></script>
+  <script src="js/profissional-agenda.js" defer></script>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      display: flex;
+      min-height: 100vh;
+      background: #f4f6f8;
+    }
+
+    /* ==== MENU LATERAL ==== */
+    .sidebar {
+      width: 240px;
+      background: #2c3e50;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      padding: 20px;
+    }
+
+    .sidebar h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .sidebar a {
+      color: #fff;
+      text-decoration: none;
+      padding: 10px;
+      border-radius: 6px;
+      margin-bottom: 8px;
+      transition: background 0.2s;
+    }
+
+    .sidebar a:hover,
+    .sidebar a.active {
+      background: #3498db;
+    }
+
+    /* ==== CONTEÚDO ==== */
+    .main-content {
+      flex: 1;
+      padding: 30px;
+      overflow-y: auto;
+    }
+
+    h1 {
+      color: #2c3e50;
+      margin-bottom: 20px;
+    }
+
+    #calendar {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+      padding: 10px;
+      max-width: 1000px;
+      margin: 0 auto 20px;
+    }
+
+    .btn-bar {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .btn {
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 6px;
+      margin: 0 8px;
+      cursor: pointer;
+      font-size: 15px;
+      transition: background 0.2s;
+    }
+
+    .btn:hover { background: #2980b9; }
+    .btn-danger { background: #e74c3c; 
+      padding: 10px 16px;
+      border-radius: 6px;
+      margin: 0 8px;
+      cursor: pointer;
+      font-size: 15px;}
+    .btn-danger:hover { background: #c0392b; }
+    .btn-green { background: #2ecc71; 
+      padding: 10px 16px;
+      border-radius: 6px;
+      margin: 0 8px;
+      cursor: pointer;
+      font-size: 15px;}
+    .btn-green:hover { background: #27ae60; }
+
+    /* ==== MODAL ==== */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      width: 90%;
+      max-width: 720px;
+      max-height: 90vh;
+      overflow: auto;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    .modal-content h2 {
+      text-align: center;
+      color: #2c3e50;
+    }
+
+    .modal-content label {
+      display: block;
+      margin-top: 8px;
+      color: #2c3e50;
+    }
+
+    /* Schedule form grid */
+    #scheduleForm {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px 20px;
+      align-items: center;
+    }
+
+    #scheduleForm label { margin: 6px 0; }
+
+    .modal-content select, .modal-content input {
+      width: 100%;
+      padding: 8px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      margin-top: 5px;
+      box-sizing: border-box;
+    }
+
+    @media (max-width: 520px) {
+      #scheduleForm { grid-template-columns: 1fr; }
+      .modal-content { padding: 16px; }
+      .btn { padding: 8px 10px; font-size: 14px; }
+    }
+
+    .modal-actions {
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    .modal-actions button {
+      margin: 0 10px;
+      padding: 8px 14px;
+      border: none;
+      border-radius: 6px;
+      color: white;
+      cursor: pointer;
+    }
+
+    .btn-close { background: #7f8c8d; }
+    .btn-close:hover { background: #636e72; }
+
+  </style>
+</head>
+<body>
+  <!-- MENU LATERAL -->
+  <div class="sidebar">
+    <h2>AutoCuidado</h2>
+    <a href="profissional-dashboard.html">🏠 Dashboard</a>
+    <a href="meus-clientes.html">👥 Meus Clientes</a>
+    <a href="profissional-agenda.html" class="active">📅 Minha Agenda</a>
+    <a href="editar-perfil-profissional.html">✏️ Editar Perfil</a>
+    <a href="login.html" onclick="localStorage.clear()">🚪 Logout</a>
+  </div>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <div class="main-content">
+    <h1>📆 Agenda do Profissional</h1>
+    <div id="calendar"></div>
+
+    <div class="btn-bar">
+      <button class="btn-green" id="btnAdd">➕ Adicionar Consulta</button>
+      <button class="btn-danger" id="btnDel">🗑️ Apagar Consulta</button>
+      <button class="btn" id="btnSchedule">🕘 Definir Horários de Trabalho</button>
+      <button class="btn" id="btnBlocked">⛔ Bloquear Datas (Feriados)</button>
+      <button class="btn" id="btnExport">📤 Exportar Semana em PDF</button>
+    </div>
+  </div>
+
+  <!-- MODAL ADICIONAR CONSULTA -->
+  <div class="modal" id="modalAdd">
+    <div class="modal-content">
+      <h2>Adicionar Consulta</h2>
+      <label>Cliente:</label>
+      <select id="clienteSelect"></select>
+
+      <label>Data e Hora:</label>
+      <input type="datetime-local" id="dataConsulta">
+
+      <label><input type="checkbox" id="descontarCredito"> Descontar 1 crédito</label>
+
+      <div class="modal-actions">
+        <button class="btn-green" id="salvarConsulta">Salvar</button>
+        <button class="btn-close" id="cancelarAdd">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL EXCLUIR CONSULTA -->
+  <div class="modal" id="modalDel">
+    <div class="modal-content">
+      <h2>Excluir Consulta</h2>
+      <p id="textoExcluir"></p>
+      <label><input type="checkbox" id="devolverCredito"> Devolver crédito ao cliente</label>
+      <div class="modal-actions">
+        <button class="btn-danger" id="confirmarDel">Excluir</button>
+        <button class="btn-close" id="cancelarDel">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+    <!-- MODAL HORÁRIOS DE TRABALHO -->
+    <div class="modal" id="modalSchedule">
+      <div class="modal-content">
+        <h2>Definir Horários de Trabalho</h2>
+        <p>Configure o horário de atendimento por dia da semana.</p>
+        <div id="scheduleForm">
+          <label>Segunda: <input type="time" id="monStart"> até <input type="time" id="monEnd"></label>
+          <label>Terça: <input type="time" id="tueStart"> até <input type="time" id="tueEnd"></label>
+          <label>Quarta: <input type="time" id="wedStart"> até <input type="time" id="wedEnd"></label>
+          <label>Quinta: <input type="time" id="thuStart"> até <input type="time" id="thuEnd"></label>
+          <label>Sexta: <input type="time" id="friStart"> até <input type="time" id="friEnd"></label>
+          <label>Sábado: <input type="time" id="satStart"> até <input type="time" id="satEnd"></label>
+          <label>Domingo: <input type="time" id="sunStart"> até <input type="time" id="sunEnd"></label>
+        </div>
+        <div class="modal-actions">
+          <button class="btn-green" id="saveSchedule">Salvar Horários</button>
+          <button class="btn-close" id="cancelSchedule">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL DATAS BLOQUEADAS -->
+    <div class="modal" id="modalBlocked">
+      <div class="modal-content">
+        <h2>Bloquear Datas</h2>
+        <p>Adicione datas que você não atenderá (feriados, ausências).</p>
+        <label>Nova data: <input type="date" id="blockedDateInput"></label>
+        <button class="btn" id="addBlocked">Adicionar</button>
+        <ul id="blockedList"></ul>
+        <div class="modal-actions">
+          <button class="btn-close" id="closeBlocked">Fechar</button>
+        </div>
+      </div>
+    </div>
+</body>
+</html>
