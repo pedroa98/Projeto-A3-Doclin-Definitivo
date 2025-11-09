@@ -166,3 +166,14 @@ body {
 }
 .notif-actions .mark-read { background:#22c55e; color:white }
 .notif-actions .remove-notif { background:#ef4444; color:white }
+.logo {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.logo img {
+  width: 160px; /* ajuste conforme o tamanho da sua logo */
+  height: auto;
+  display: block;
+}
