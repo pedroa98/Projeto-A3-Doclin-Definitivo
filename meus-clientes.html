@@ -129,23 +129,26 @@
       color: #555;
       margin-top: 20px;
     }
-  </style>
-</head>
+    </style>
+  </head>
 
-<body>
-  <div class="sidebar">
-    <div class="logo">
-      <img src="assets/LOGO_COLOR_1.png" alt="Doclin Logo">
-    </div>
-    <a href="profissional-agenda.html">📅 Agenda</a>
-    <a href="interesses-profissional.html">💬 Interessados</a>
-    <a href="meus-clientes.html" class="active">👥 Meus Clientes</a>
-    <a href="editar-perfil-profissional.html">✏️ Editar Perfil</a>
-    <a href="login.html" onclick="localStorage.clear()">🚪 Logout</a>
-    <div style="margin-top:12px;color:#fff">Notificações: <span id="notif-badge">0</span></div>
-  </div>
+  <body>
+    <div class="dashboard-container">
+      <header class="sidebar">
+        <div class="logo">
+          <img src="assets/LOGO_COLOR_1.png" alt="Doclin Logo">
+        </div>
+        <nav>
+          <a href="profissional-agenda.html" class="menu-btn">📅 Agenda</a>
+          <a href="interesses-profissional.html" class="menu-btn">💬 Interessados</a>
+          <a href="meus-clientes.html" class="menu-btn active">👥 Meus Clientes</a>
+          <a href="editar-perfil-profissional.html" class="menu-btn">✏️ Editar Perfil</a>
+          <a href="login.html" class="menu-btn logout" onclick="localStorage.clear()">🚪 Sair</a>
+        </nav>
+        <span class="notif-badge" id="notif-badge">0</span>
+      </header>
 
-  <div class="main-content">
+      <div class="main-content">
     <div class="top-bar">
       <h1>👥 Meus Clientes</h1>
       <button class="btn-back" onclick="window.location.href='profissional-dashboard.html'">⬅️ Voltar</button>

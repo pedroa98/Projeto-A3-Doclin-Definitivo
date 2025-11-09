@@ -30,22 +30,25 @@
     }
   </style>
 
+  </style>
+
 </head>
 <body>
-
-  <div class="sidebar">
     <div class="logo">
-      <img src="assets/LOGO_COLOR_1.png" alt="Doclin Logo">
-    </div>
-    <a href="cliente-dashboard.html">🏠 Dashboard</a>
-    <a href="lista-servicos.html" class="active">🔍 Lista de Serviços</a>
-    <a href="editar-perfil-cliente.html">✏️ Editar Perfil</a>
-    <a href="login.html" onclick="localStorage.clear()">🔒 Logout</a>
-  </div>
-
-  <div class="main-content">
-    <div class="perfil-container" id="perfilEstabelecimento">
-      <p>Carregando estabelecimento...</p>
+  <div class="dashboard-container">
+    <header class="sidebar">
+      <div class="logo">
+        <img src="assets/LOGO_COLOR_1.png" alt="Doclin Logo">
+      </div>
+      <nav>
+        <a href="estabelecimento-dashboard.html" class="menu-btn">📊 Dashboard</a>
+        <a href="estabelecimento-agenda.html" class="menu-btn">📅 Agenda</a>
+        <a href="interesses-estabelecimento.html" class="menu-btn">� Interessados</a>
+        <a href="meus-clientes-estabelecimento.html" class="menu-btn">👥 Meus Clientes</a>
+        <a href="editar-perfil-estabelecimento.html" class="menu-btn">✏️ Editar Perfil</a>
+        <a href="login.html" class="menu-btn logout">🚪 Sair</a>
+      </nav>
+    </header>
     </div>
 
     <div id="calendar"></div>

@@ -120,21 +120,23 @@
   </style>
 </head>
 <body>
-  <!-- ==== MENU LATERAL DO CLIENTE ==== -->
-  <div class="sidebar">
-    <div class="logo">
-      <img src="assets/LOGO_COLOR_1.png" alt="Doclin Logo">
-    </div>
-    <a href="cliente-dashboard.html">📅 Principal</a>
-    <a href="cliente-agenda.html">📅 Minha Agenda</a>
-    <a href="lista-servicos.html">🔍 Lista de Serviços</a>
-    <a href="meus-profissionais.html" class="active">👨‍⚕️ Meus Profissionais</a>
-    <a href="editar-perfil-cliente.html">✏️ Editar Perfil</a>
-    <a href="login.html" onclick="localStorage.clear()">🚪 Logout</a>
-  </div>
+  <div class="dashboard-container">
+    <!-- ==== MENU SUPERIOR DO CLIENTE ==== -->
+    <header class="sidebar">
+      <div class="logo">
+        <img src="assets/LOGO_COLOR_1.png" alt="Doclin Logo">
+      </div>
+      <nav>
+        <a href="cliente-agenda.html" class="menu-btn">📅 Minha Agenda</a>
+        <a href="lista-servicos.html" class="menu-btn">🔍 Lista de Serviços</a>
+        <a href="meus-profissionais.html" class="menu-btn active">👨‍⚕️ Meus Profissionais</a>
+        <a href="editar-perfil-cliente.html" class="menu-btn">✏️ Editar Perfil</a>
+        <a href="login.html" class="menu-btn logout" onclick="localStorage.clear()">🚪 Sair</a>
+      </nav>
+    </header>
 
-  <!-- ==== CONTEÚDO PRINCIPAL ==== -->
-  <div class="main-content">
+    <!-- ==== CONTEÚDO PRINCIPAL ==== -->
+    <div class="main-content">
     <button class="btn-back" onclick="window.location.href='cliente-dashboard.html'">⬅️ Voltar ao Dashboard</button>
     <h1>👨‍⚕️ Meus Profissionais e Estabelecimentos</h1>
 

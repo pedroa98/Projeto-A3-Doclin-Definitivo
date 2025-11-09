@@ -187,23 +187,26 @@
     .btn-close { background: #7f8c8d; }
     .btn-close:hover { background: #636e72; }
 
-  </style>
-</head>
-<body>
-  <!-- MENU LATERAL -->
-  <div class="sidebar">
-    <div class="logo">
-      <img src="assets/LOGO_COLOR_1.png" alt="Doclin Logo">
-    </div>
-    <a href="profissional-dashboard.html">🏠 Dashboard</a>
-    <a href="meus-clientes.html">👥 Meus Clientes</a>
-    <a href="profissional-agenda.html" class="active">📅 Minha Agenda</a>
-    <a href="editar-perfil-profissional.html">✏️ Editar Perfil</a>
-    <a href="login.html" onclick="localStorage.clear()">🚪 Logout</a>
-  </div>
+    </style>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <!-- MENU SUPERIOR -->
+      <header class="sidebar">
+        <div class="logo">
+          <img src="assets/LOGO_COLOR_1.png" alt="Doclin Logo">
+        </div>
+        <nav>
+          <a href="profissional-dashboard.html" class="menu-btn">🏠 Dashboard</a>
+          <a href="meus-clientes.html" class="menu-btn">👥 Meus Clientes</a>
+          <a href="profissional-agenda.html" class="menu-btn active">📅 Minha Agenda</a>
+          <a href="editar-perfil-profissional.html" class="menu-btn">✏️ Editar Perfil</a>
+          <a href="login.html" class="menu-btn logout" onclick="localStorage.clear()">🚪 Sair</a>
+        </nav>
+      </header>
 
-  <!-- CONTEÚDO PRINCIPAL -->
-  <div class="main-content">
+      <!-- CONTEÚDO PRINCIPAL -->
+      <div class="main-content">
     <h1>📆 Agenda do Profissional</h1>
     <div id="calendar"></div>
 

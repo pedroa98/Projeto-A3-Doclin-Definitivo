@@ -43,22 +43,23 @@
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
       gap: 20px;
     }
-  </style>
-</head>
-<body>
-  <div class="sidebar">
-    <div class="logo">
-      <img src="assets/LOGO_COLOR_1.png" alt="Doclin Logo">
-    </div>
-    <a href="cliente-dashboard.html">📅 Inicial</a>
-    <a href="cliente-agenda.html">📅 Minha Agenda</a>
-    <a href="lista-servico.html" class="active">🔍 Lista de Serviços</a>
-    <a href="meus-profissionais.html">👨‍⚕️ Meus Profissionais</a>
-    <a href="editar-perfil-cliente.html">✏️ Editar Perfil</a>
-    <a href="login.html" onclick="localStorage.clear()">🚪 Logout</a>
-  </div>
+    </style>
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <header class="sidebar">
+        <div class="logo">
+          <img src="assets/LOGO_COLOR_1.png" alt="Doclin Logo">
+        </div>
+        <nav>
+          <a href="cliente-agenda.html" class="menu-btn">📅 Minha Agenda</a>
+          <a href="meus-profissionais.html" class="menu-btn">👨‍⚕️ Meus Profissionais</a>
+          <a href="editar-perfil-cliente.html" class="menu-btn">✏️ Editar Perfil</a>
+          <a href="login.html" class="menu-btn logout" onclick="localStorage.clear()">🚪 Sairt</a>
+        </nav>
+      </header>
 
-  <div class="main-content">
+      <div class="main-content">
     <h1>🔍 Lista de Profissionais</h1>
     <input type="text" id="busca" placeholder="Buscar por nome ou especialidade" style="padding:10px;width:100%;max-width:400px;margin-bottom:20px;">
     <div id="lista"></div>

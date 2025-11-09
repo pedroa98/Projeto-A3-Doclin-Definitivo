@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard - Cliente</title>
   <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/menu-superior.css">
   <!-- FullCalendar removido: não usamos mais agenda na área principal -->
   <script src="https://unpkg.com/parse/dist/parse.min.js"></script>
   <script src="js/auth.js" defer></script>
@@ -16,8 +16,8 @@
 
 <body>
   <div class="dashboard-container">
-    <!-- MENU LATERAL -->
-    <aside class="sidebar">
+    <!-- MENU SUPERIOR -->
+    <header class="sidebar">
       <div class="logo">
         <img src="assets/LOGO_COLOR_1.png" alt="Doclin Logo">
       </div>
@@ -28,24 +28,11 @@
         <a href="editar-perfil-cliente.html" class="menu-btn">✏️ Editar Perfil</a>
         <a href="login.html" class="menu-btn" onclick="localStorage.clear()">🚪 Sair</a>
       </nav>
-    </aside>
+    </header>
 
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="main-content">
     <h1>Bem-vindo(a)!</h1>
-
-    <!-- Area de propaganda no lugar da agenda -->
-    <div class="ads-area">
-      <h2>Propaganda</h2>
-      <div class="ad-card">
-        <h3>Promoção: 20% off em serviços selecionados</h3>
-        <p>Agende hoje e ganhe desconto em tratamentos de beleza.</p>
-      </div>
-      <div class="ad-card">
-        <h3>Pacote Relax</h3>
-        <p>Pacote com massagem + limpeza facial com preço especial.</p>
-      </div>
-    </div>
 
   <div class="notificacoes">
       <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap">
