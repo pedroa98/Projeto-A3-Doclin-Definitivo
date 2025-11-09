@@ -176,4 +176,5 @@ body {
   width: 160px; /* ajuste conforme o tamanho da sua logo */
   height: auto;
   display: block;
+  cursor: pointer
 }
