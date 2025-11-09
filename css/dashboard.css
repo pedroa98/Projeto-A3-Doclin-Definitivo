@@ -2,11 +2,9 @@ body {
   margin: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   height: 100vh;
-  /* Use same gradient as main style */
   background: #e8e4e5;
 }
 
-/* CONTAINER GERAL */
 .dashboard-container {
   display: flex;
   flex-direction: column;
@@ -14,7 +12,6 @@ body {
   height: 100%;
 }
 
-/* MENU SUPERIOR */
 .sidebar {
   background: #ffffff;
   width: 100%;
@@ -33,7 +30,6 @@ body {
   color: #ecf0f1;
 }
 
-/* BOTÕES DO MENU */
 .menu-btn {
   display: inline-block;
   background: transparent;
@@ -61,7 +57,7 @@ body {
 /* CONTEÚDO PRINCIPAL */
 .main-content {
   flex: 1;
-  padding: 20px 30px;
+  padding: 100px 30px, 30px;
   overflow-y: auto;
   width: 100%;
   box-sizing: border-box;

@@ -50,35 +50,33 @@
         <a href="estabelecimento-agenda.html" class="menu-btn">📅 Agenda</a>
         <a href="editar-perfil-estabelecimento.html" class="menu-btn">✏️ Editar Perfil</a>
         <a href="login.html" class="menu-btn logout">🚪 Sair</a>
+        <span class="notif-badge" id="notif-badge">0</span>
       </nav>
     </header>
 
     <main class="main-content">
       <h1>Interessados</h1>
 
-      <!-- NOTIFICAÇÕES -->
-      <section id="notifications-area">
-        <h2>Notificações</h2>
-        <div id="notifications-controls">
-          <button id="refresh-notifications">Atualizar</button>
-          <button id="mark-all-read">Marcar todas como lidas</button>
+      <!-- NOTIFICAÇÕES (padronizado) -->
+      <div class="notificacoes">
+        <div class="controls">
+          <h2 style="margin:0">🔔 Notificações</h2>
+          <div class="actions">
+            <button id="refresh-notifications" class="btn-secondary">Atualizar</button>
+            <button id="mark-all-read" class="btn-danger">Marcar todas como lidas</button>
+            <button id="remove-read" class="btn-danger">Remover lidas</button>
+          </div>
         </div>
+
         <ul id="notifications-list"></ul>
         <div id="no-notifications" style="display:none">Nenhuma notificação</div>
-      </section>
+        <p id="mensagem"></p>
+      </div>
 
       <section id="requests-area">
         <p>Mensagens e solicitações de vínculo enviadas por clientes.</p>
         <ul id="lista-interesses"></ul>
         <p id="mensagem"></p>
-      </section>
-
-      <section id="ads-area">
-        <h2>Propaganda</h2>
-        <div class="ad-card">
-          <h3>Promoção</h3>
-          <p>Coloque anúncios aqui.</p>
-        </div>
       </section>
     </main>
   </div>

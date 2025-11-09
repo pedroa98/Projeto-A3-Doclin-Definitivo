@@ -20,7 +20,17 @@ body {
   background-color: #e8e4e5;       /* fallback */
   min-height: 100vh;
 }
-
+.login {
+  font-family: 'Archivo', sans-serif;
+  color: #333;
+  background-image: url('../assets/tela_de_login_bg.png'); /* ajuste o caminho se necessário */
+  background-size: cover;          /* cobre toda a tela */
+  background-position: center;     /* centraliza a imagem */
+  background-repeat: no-repeat;    /* não repete */
+  background-attachment: fixed;    /* fundo fixo ao rolar */
+  background-color: #e8e4e5;       /* fallback */
+  min-height: 100vh;
+}
 /* ======= 🔹 CONTEÚDO PRINCIPAL ======= */
 .container {
   max-width: 420px;

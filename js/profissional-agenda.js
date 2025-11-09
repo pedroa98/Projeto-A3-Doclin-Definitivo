@@ -18,33 +18,41 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
-  // Inicializar calendário
-  const calendar = new FullCalendar.Calendar(calendarEl, {
-    initialView: "timeGridWeek",
-    locale: "pt-br",
-    allDaySlot: false,
-    nowIndicator: true,
-    selectable: false,
-    editable: false,
-    height: "auto",
-    headerToolbar: {
-      left: "prev,next today",
-      center: "title",
-      right: "dayGridMonth,timeGridWeek,timeGridDay",
-    },
-    events: await carregarConsultas(),
-    eventClick(info) {
-      selectedEvent = info.event;
-      document.getElementById("textoExcluir").textContent = `Excluir "${info.event.title}" em ${info.event.start.toLocaleString()}?`;
-      document.getElementById("modalDel").style.display = "flex";
-    },
-  });
-
-  calendar.render();
-
-  // Horários e datas bloqueadas
+  // Horários e datas bloqueadas (carregar antes de inicializar o calendário)
   let workingHours = profObj.get('workingHours') || {};
   let blockedDates = profObj.get('blockedDates') || [];
+
+  // ensure calendar-utils is loaded
+  if (!window.inicializarAgenda) {
+    await new Promise((resolve, reject) => {
+      const s = document.createElement('script');
+      s.src = 'js/calendar-utils.js';
+      s.onload = resolve; s.onerror = reject;
+      document.head.appendChild(s);
+    });
+  }
+
+  // Inicializar calendário usando calendar-utils
+  const calendar = await inicializarAgenda(calendarEl, {
+    loadEvents: carregarConsultas,
+    blockedDates: blockedDates,
+    workingHours: workingHours,
+    selectable: false,
+    onEventClick(info) {
+      selectedEvent = info.event;
+      // show standardized details modal
+      if (window.showConsultaModal) window.showConsultaModal(info.event);
+    }
+  });
+
+  // Listen requests from standardized details modal to trigger deletion flow
+  document.addEventListener('agenda:request-delete', (e) => {
+    const ev = e.detail && e.detail.eventObj;
+    if (!ev) return;
+    selectedEvent = { id: ev.id };
+    document.getElementById('textoExcluir').textContent = `Excluir evento ${ev.id}?`;
+    document.getElementById('modalDel').style.display = 'flex';
+  });
 
   document.getElementById('btnSchedule').addEventListener('click', () => openScheduleModal());
   document.getElementById('btnBlocked').addEventListener('click', () => openBlockedModal());
@@ -288,7 +296,15 @@ document.addEventListener("DOMContentLoaded", async () => {
       }
 
       await ap.destroy();
-      selectedEvent.remove();
+      // Remover o evento da UI de forma segura: o modal de detalhes envia apenas {id},
+      // então precisamos recuperar a referência do FullCalendar quando necessário.
+      try {
+        let evObj = selectedEvent;
+        if (!evObj || typeof evObj.remove !== 'function') {
+          evObj = calendar.getEventById(selectedEvent && selectedEvent.id);
+        }
+        if (evObj && typeof evObj.remove === 'function') evObj.remove();
+      } catch (uiErr) { console.warn('Falha ao remover evento da UI:', uiErr); }
 
       // Notificação para o cliente
       if (cli) {

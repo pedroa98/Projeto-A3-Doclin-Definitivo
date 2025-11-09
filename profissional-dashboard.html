@@ -75,17 +75,21 @@
     <main class="main-content">
       <h1>Meu Painel</h1>
 
-      <!-- NOTIFICAÇÕES -->
-      <section id="notifications-area">
-        <h2>Notificações</h2>
-        <div id="notifications-controls">
-          <button id="refresh-notifications">Atualizar</button>
-          <button id="mark-all-read">Marcar todas como lidas</button>
-          <button id="remove-read">Remover lidas</button>
+      <!-- NOTIFICAÇÕES (padronizado) -->
+      <div class="notificacoes">
+        <div class="controls">
+          <h2 style="margin:0">🔔 Notificações</h2>
+          <div class="actions">
+            <button id="refresh-notifications" class="btn-secondary">Atualizar</button>
+            <button id="mark-all-read" class="btn-danger">Marcar todas como lidas</button>
+            <button id="remove-read" class="btn-danger">Remover lidas</button>
+          </div>
         </div>
+
         <ul id="notifications-list"></ul>
         <div id="no-notifications" style="display:none">Nenhuma notificação</div>
-      </section>
+        <p id="mensagem"></p>
+      </div>
   <script src="js/profissional-dashboard.js"></script>
 </body>
 </html>

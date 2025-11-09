@@ -3,61 +3,298 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Estabelecimento - AutoCuidado</title>
-  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/main.min.css" rel="stylesheet" />
-  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+  <title>Estabelecimento - Doclin</title>
+
+  <!-- CSS principal -->
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="css/menu-superior.css" />
+
+  <!-- Parse SDK -->
   <script src="https://unpkg.com/parse/dist/parse.min.js"></script>
   <script src="js/auth.js" defer></script>
   <script src="js/estabelecimento-cliente-agenda.js" defer></script>
 
-  <link rel="stylesheet" href="css/menu-superior.css">
+  <!-- FullCalendar -->
+  <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.css" rel="stylesheet" />
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
+
+  <!-- jsPDF (exportações futuras) -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.28/jspdf.plugin.autotable.min.js"></script>
+
   <style>
-    .perfil-container { 
-      background:#fff; 
-      padding:25px; 
-      border-radius:12px; 
-      max-width:700px; 
-      margin:20px auto; 
-      text-align:center;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    /* ==== ESTILOS GERAIS ==== */
+    body {
+      font-family: "Poppins", sans-serif;
+      background: #f4f6f9;
+      margin: 0;
+      color: #2c3e50;
     }
-    img { 
-      width:140px; 
-      height:140px; 
-      border-radius:12px; 
-      object-fit:cover;
-      margin-bottom: 15px;
+
+    .dashboard-container {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* menu-specific styles moved to css/menu-superior.css */
+
+    /* ==== CONTEÚDO PRINCIPAL ==== */
+    .main-content {
+      flex: 1;
+      padding: 30px;
+    }
+
+    .perfil-container {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      padding: 25px;
+      max-width: 700px;
+      margin: auto;
+      text-align: center;
+    }
+
+    .perfil-container img {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .perfil-container h2 {
+      margin: 15px 0 5px;
+      color: #2c3e50;
+    }
+
+    .perfil-container p {
+      color: #555;
+      margin: 4px 0;
+    }
+
+    /* ==== AGENDA ==== */
+    h2#titulo-agenda {
+      text-align: center;
+      color: #2c3e50;
+      margin-top: 40px;
+      font-size: 22px;
+    }
+
+    #calendar {
+      margin-top: 20px;
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      z-index: 1;
+      position: relative;
+    }
+
+    /* ==== LEGENDA ==== */
+    #legenda-agenda {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+      font-size: 15px;
+    }
+
+    #legenda-agenda .item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    #legenda-agenda .cor {
+      width: 18px;
+      height: 18px;
+      border-radius: 4px;
+      display: inline-block;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+    }
+
+    #voltar-dashboard {
+      display: block;
+      text-align: center;
+      margin: 30px auto 0 auto;
+      width: fit-content;
+      padding: 10px 20px;
+      background: #e67e22;
+      color: white;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+
+    #voltar-dashboard:hover {
+      background: #d35400;
+    }
+
+    .btn {
+      padding: 10px 15px;
+      border-radius: 6px;
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background 0.2s;
+      font-weight: 500;
+    }
+
+    .btn-green {
+      background: #27ae60;
+    }
+
+    .btn-green:hover {
+      background: #229954;
+    }
+
+    .btn-blue {
+      background: #3498db;
+    }
+
+    .btn-blue:hover {
+      background: #2980b9;
+    }
+
+    #mensagemInteresse {
+      width: 100%;
+      height: 80px;
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      resize: vertical;
+      font-family: "Poppins", sans-serif;
+    }
+
+    #mensagem {
+      text-align: center;
+      font-weight: bold;
+      margin-top: 15px;
+    }
+
+    /* ==== MODAIS ==== */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .modal-content {
+      background: #fff;
+      padding: 20px;
+      border-radius: 12px;
+      text-align: center;
+      width: 320px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 0.3s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .modal-content h3 {
+      color: #2c3e50;
+      margin-bottom: 10px;
+    }
+
+    .modal-content p {
+      margin: 10px 0;
+      font-weight: 500;
+      color: #555;
+    }
+
+    /* ==== RESPONSIVIDADE ==== */
+    @media (max-width: 768px) {
+      .main-content {
+        padding: 15px;
+      }
+
+      #calendar {
+        padding: 10px;
+      }
     }
   </style>
-
-  </style>
-
 </head>
+
 <body>
-    <div class="logo">
   <div class="dashboard-container">
+    <!-- MENU SUPERIOR -->
     <header class="sidebar">
       <div class="logo">
         <a href="estabelecimento-dashboard.html">
-          <img src="assets/LOGO_COLOR_1.png" alt="Doclin Logo">
+          <img src="assets/LOGO_COLOR_1.png" alt="Doclin Logo" />
         </a>
       </div>
       <nav>
         <a href="estabelecimento-dashboard.html" class="menu-btn">📊 Dashboard</a>
         <a href="estabelecimento-agenda.html" class="menu-btn">📅 Agenda</a>
-        <a href="interesses-estabelecimento.html" class="menu-btn">� Interessados</a>
-        <a href="meus-clientes-estabelecimento.html" class="menu-btn">👥 Meus Clientes</a>
+        <a href="meus-profissionais.html" class="menu-btn">💬 Meus Profissionais</a>
         <a href="editar-perfil-estabelecimento.html" class="menu-btn">✏️ Editar Perfil</a>
-        <a href="login.html" class="menu-btn logout">🚪 Sair</a>
+        <a href="login.html" onclick="localStorage.clear()" class="logout">🚪 Sair</a>
       </nav>
     </header>
-    </div>
 
-    <div id="calendar"></div>
-    <p id="mensagem"></p>
+    <!-- CONTEÚDO PRINCIPAL -->
+    <div class="main-content">
+      <div class="perfil-container" id="perfilEstabelecimento">
+        <p>Carregando informações do estabelecimento...</p>
+      </div>
+
+      <h2 id="titulo-agenda">Agenda de Disponibilidade</h2>
+      <div id="calendar"></div>
+
+      <div id="legenda-agenda">
+        <div class="item">
+          <span class="cor" style="background: #3498db"></span>
+          <span>Horários Livres</span>
+        </div>
+        <div class="item">
+          <span class="cor" style="background: #27ae60"></span>
+          <span>Consultas Ocupadas</span>
+        </div>
+      </div>
+
+      <a id="voltar-dashboard" href="cliente-dashboard.html">⬅️ Voltar ao Dashboard</a>
+      <p id="mensagem"></p>
+    </div>
   </div>
 
+  <!-- MODAIS -->
+  <div id="modalMarcar" class="modal">
+    <div class="modal-content">
+      <h3>Confirmar Agendamento</h3>
+      <p id="textoDataMarcar"></p>
+      <button id="confirmarMarcar" class="btn btn-green">Confirmar</button>
+      <button id="cancelarMarcar" class="btn btn-blue">Cancelar</button>
+    </div>
+  </div>
 
+  <div id="modalCancelar" class="modal">
+    <div class="modal-content">
+      <h3>Cancelar Consulta</h3>
+      <p id="textoDataCancelar"></p>
+      <button id="confirmarCancelar" class="btn btn-green">Confirmar</button>
+      <button id="fecharCancelar" class="btn btn-blue">Fechar</button>
+    </div>
+  </div>
 </body>
-
 </html>

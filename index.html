@@ -12,7 +12,9 @@
   <meta name="theme-color" content="#667eea">
   
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="css/menu-superior.css">
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Archivo:wght@600&display=swap');
     * {
       margin: 0;
       padding: 0;
@@ -59,22 +61,7 @@
       box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
     }
 
-    .logo {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--primary);
-    }
-
-    .logo i {
-      font-size: 1.8rem;
-      background: var(--gradient);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
+    /* .logo styling moved to css/menu-superior.css to centralize header/menu visuals */
 
     .nav-links {
       display: flex;
@@ -142,6 +129,10 @@
       justify-content: space-between;
       padding: 6rem 5% 2rem;
       background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      background-image: url('assets/bg_01.png');
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
       position: relative;
       overflow: hidden;
     }
@@ -170,9 +161,10 @@
       z-index: 1;
     }
 
-    .hero h1 {
+    .hero h3 {
+      font-family: 'Archivo', sans-serif;
       font-size: 3.5rem;
-      line-height: 1.2;
+      line-height: 0.7;
       margin-bottom: 1rem;
       background: var(--gradient);
       -webkit-background-clip: text;
@@ -184,10 +176,27 @@
     .hero p {
       font-size: 1.2rem;
       color: #666;
+      max-width: 400px;
+      max-height: 400px;
       margin-bottom: 2rem;
       animation: fadeInUp 0.8s ease 0.2s both;
     }
-
+    #p2 {
+      font-size: 1rem;
+      color: #666;
+      max-width: 400px;
+      max-height: 400px;
+      margin-bottom: 2rem;
+      animation: fadeInUp 0.8s ease 0.2s both;
+    }
+    #p3 {
+      font-size: 1rem;
+      color: #008080;
+      max-width: 400px;
+      max-height: 400px;
+      margin-bottom: 2rem;
+      animation: fadeInUp 0.8s ease 0.2s both;
+    }
     .hero-buttons {
       display: flex;
       gap: 1rem;
@@ -528,8 +537,9 @@
   <!-- NAVBAR -->
   <nav class="navbar">
     <div class="logo">
-      <i class="fas fa-heart-pulse"></i>
-      <span>Doclin</span>
+      <a href="index.html">
+        <img src="assets/LOGO_COLOR_1.png" alt="Doclin Logo" style="height: 40px;">
+      </a>
     </div>
     <ul class="nav-links" id="navLinks">
       <li><a href="#inicio">Início</a></li>
@@ -546,15 +556,16 @@
   <!-- HERO SECTION -->
   <section class="hero" id="inicio">
     <div class="hero-content">
-      <h1>Conectando você ao bem-estar</h1>
-      <p>A plataforma completa para agendar serviços de saúde, beleza e bem-estar. Encontre profissionais qualificados perto de você.</p>
+      <h3>Encontre.</h3></br>
+      <h3>Conecte.</h3></br>
+      <h3>Cuide.</h3></br>
+      <p>Com o Doclin, você acessa profissionais da saúde, academias e clínicas em um só lugar.</p> 
+      <p id="p2">Simples, rápido e do seu jeito, seja para buscar atendimento, oferecer seus serviços ou gerenciar seu espaço.</p>
+      <p id="p3"><strong>Comece agora!</strong><br> Descubra o cuidado<br> ideal para você.</p>
       <div class="hero-buttons">
         <a href="register.html" class="btn btn-primary">Começar Gratuitamente</a>
         <a href="#recursos" class="btn btn-outline">Saiba Mais</a>
       </div>
-    </div>
-    <div class="hero-image">
-      <i class="fas fa-spa"></i>
     </div>
   </section>
 

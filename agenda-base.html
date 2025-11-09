@@ -6,6 +6,7 @@
   <title>Agenda Base - AutoCuidado</title>
 
   <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/main.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="css/menu-superior.css">
 
   <style>
     body {
@@ -60,7 +61,15 @@
 </head>
 
 <body>
-  <header>📅 Agenda Base - AutoCuidado</header>
+  <header class="sidebar">
+    <div class="logo">
+      <a href="index.html"><img src="assets/LOGO_COLOR_1.png" alt="Doclin Logo"></a>
+    </div>
+    <nav>
+      <a href="agenda-base.html" class="menu-btn active">📅 Agenda Base</a>
+      <a href="index.html" class="menu-btn">🏠 Home</a>
+    </nav>
+  </header>
 
   <button id="addEventBtn">➕ Adicionar evento de teste</button>
 
