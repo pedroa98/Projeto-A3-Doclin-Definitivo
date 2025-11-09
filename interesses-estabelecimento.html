@@ -4,15 +4,41 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Interessados - Estabelecimento</title>
-  <link rel="stylesheet" href="css/style.css">
-  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/menu-superior.css">
   <script src="https://unpkg.com/parse/dist/parse.min.js"></script>
   <script src="js/auth.js" defer></script>
   <script src="js/interesses-estabelecimento.js" defer></script>
+  <style>
+    #notifications-area, #requests-area, #ads-area {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    #notifications-controls {
+      margin: 15px 0;
+    }
+    #notifications-controls button {
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+    .ad-card {
+      background: #f8f9fa;
+      border-radius: 8px;
+      padding: 15px;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
   <div class="dashboard-container">
-    <aside class="sidebar">
+    <header class="sidebar">
       <div class="logo">
         <img src="assets/LOGO_COLOR_1.png" alt="Doclin Logo">
       </div>
@@ -23,7 +49,7 @@
         <a href="editar-perfil-estabelecimento.html" class="menu-btn">✏️ Editar Perfil</a>
         <a href="login.html" class="menu-btn logout">🔒 Logout</a>
       </nav>
-    </aside>
+    </header>
 
     <main class="main-content">
       <h1>Interessados</h1>

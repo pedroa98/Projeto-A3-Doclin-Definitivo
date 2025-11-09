@@ -1,0 +1,129 @@
+/* Reset e estilos base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Estilos para o menu superior */
+.sidebar {
+  background: #ffffff;
+  width: 100%;
+  color: #434343;
+  padding: 15px 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}
+
+.sidebar .logo {
+  flex: 0 0 auto;
+}
+
+.sidebar .logo img {
+  height: 40px;
+  width: auto;
+}
+
+.sidebar nav {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.menu-btn {
+  display: inline-block;
+  background: transparent;
+  color: #434343;
+  text-decoration: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+  font-weight: 500;
+}
+
+.menu-btn:hover {
+  background-color: rgba(67, 67, 67, 0.1);
+}
+
+.logout {
+  color: #ff3b3b;
+}
+
+.logout:hover {
+  background-color: rgba(255, 59, 59, 0.1);
+}
+
+/* Ajustes gerais do layout */
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #f4f6f8;
+}
+
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.main-content {
+  flex: 1;
+  padding: 80px 30px 20px;  /* Added top padding to account for fixed menu */
+  box-sizing: border-box;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .sidebar {
+    padding: 10px;
+  }
+
+  .sidebar .logo img {
+    height: 30px;
+  }
+
+  .sidebar nav {
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+
+  .menu-btn {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+
+  .main-content {
+    padding: 70px 15px 15px;
+  }
+}
+
+@media (max-width: 480px) {
+  .sidebar {
+    flex-direction: column;
+    padding: 10px 5px;
+  }
+
+  .sidebar nav {
+    justify-content: center;
+    margin-top: 10px;
+  }
+
+  .main-content {
+    padding-top: 100px;
+  }
+}

@@ -13,21 +13,19 @@
   <script src="https://unpkg.com/parse/dist/parse.min.js"></script>
   <script src="js/auth.js" defer></script>
   <script src="js/estabelecimento-agenda.js" defer></script>
+  <link rel="stylesheet" href="css/menu-superior.css">
   <style>
-    body { margin:0; font-family: 'Poppins', sans-serif; display:flex; min-height:100vh; background:#f4f6f8 }
-    .sidebar { width: 240px; background: #2c3e50; color: #fff; display: flex; flex-direction: column; padding: 20px; }
-    .sidebar a { color: #fff; text-decoration: none; padding: 10px; border-radius: 6px; margin-bottom: 8px; }
-    .sidebar a.active, .sidebar a:hover { background: #3498db; }
-    .main-content{ flex:1; padding:30px }
     #calendar{ background:white; border-radius:12px; padding:15px; max-width:1000px; margin:0 auto }
   </style>
 </head>
 <body>
-  <div class="sidebar">
-    <div class="logo">
-      <img src="assets/LOGO_COLOR_1.png" alt="Doclin Logo">
-    </div>
-    <a href="estabelecimento-dashboard.html">Dashboard</a>
+  <div class="dashboard-container">
+    <header class="sidebar">
+      <div class="logo">
+        <img src="assets/LOGO_COLOR_1.png" alt="Doclin Logo">
+      </div>
+      <nav>
+        <a href="estabelecimento-dashboard.html" class="menu-btn">📊 Dashboard</a>
     <a href="meus-clientes-estabelecimento.html">Meus Clientes</a>
     <a href="#" class="active">Minha Agenda</a>
     <a href="editar-perfil-estabelecimento.html">Editar Perfil</a>

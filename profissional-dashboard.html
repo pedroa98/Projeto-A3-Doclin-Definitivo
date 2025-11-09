@@ -12,13 +12,50 @@
   <script src="https://unpkg.com/parse/dist/parse.min.js"></script>
 
   <!-- Estilos -->
-  <link rel="stylesheet" href="css/dashboard.css">
+  <link rel="stylesheet" href="css/menu-superior.css">
   <script src="js/auth.js"></script>
+  <style>
+    #notifications-area {
+      background: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+    #notifications-controls {
+      margin: 15px 0;
+    }
+    #notifications-controls button {
+      background: #3498db;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      margin-right: 10px;
+      cursor: pointer;
+    }
+    #notifications-list {
+      list-style: none;
+      padding: 0;
+    }
+    #notifications-list li {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    .notif-badge {
+      background: #ff3b3b;
+      color: white;
+      padding: 2px 6px;
+      border-radius: 10px;
+      font-size: 12px;
+      margin-left: 5px;
+    }
+  </style>
 </head>
 <body>
   <div class="dashboard-container">
-    <!-- MENU LATERAL -->
-    <aside class="sidebar">
+    <!-- MENU SUPERIOR -->
+    <header class="sidebar">
       <div class="logo">
         <img src="assets/LOGO_COLOR_1.png" alt="Doclin Logo">
       </div>
@@ -28,9 +65,9 @@
         <a href="profissional-agenda.html" class="menu-btn">📅 Agenda</a>
         <a href="editar-perfil-profissional.html" class="menu-btn">✏️ Editar Perfil</a>
         <a href="login.html" class="menu-btn logout">🚪 Logout</a>
+        <span class="notif-badge" id="notif-badge">0</span>
       </nav>
-      <div style="margin-top:12px;color:#fff">Notificações: <span id="notif-badge">0</span></div>
-    </aside>
+    </header>
 
     <!-- CONTEÚDO PRINCIPAL -->
     <main class="main-content">
@@ -47,22 +84,6 @@
         <ul id="notifications-list"></ul>
         <div id="no-notifications" style="display:none">Nenhuma notificação</div>
       </section>
-
-      <!-- AREA DE PROPAGANDA (substitui agenda) -->
-      <section id="ads-area">
-        <h2>Propaganda</h2>
-        <div class="ad-card">
-          <h3>Oferta para Profissionais</h3>
-          <p>Upgrade: anúncios e destaques para profissionais parceiros.</p>
-        </div>
-        <div class="ad-card">
-          <h3>Curso de Atualização</h3>
-          <p>Curso online com 10% de desconto para usuários ativos.</p>
-        </div>
-      </section>
-    </main>
-  </div>
-
   <script src="js/profissional-dashboard.js"></script>
 </body>
 </html>
