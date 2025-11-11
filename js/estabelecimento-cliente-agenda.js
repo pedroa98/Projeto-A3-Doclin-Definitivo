@@ -78,16 +78,29 @@ document.addEventListener("DOMContentLoaded", async () => {
         <button class="btn btn-blue" id="btnInteresse">Solicitar Vínculo</button>
       `;
       document.getElementById("btnInteresse").addEventListener("click", async () => {
-        const texto = document.getElementById("mensagemInteresse").value.trim();
-        if (!texto) return alert("Digite uma mensagem antes de enviar.");
-        const Interesse = Parse.Object.extend("Interesse");
-        const i = new Interesse();
-        i.set("client", clientProfile);
-        i.set("establishment", est);
-        i.set("message", texto);
-        await i.save();
-        msg.textContent = "Mensagem enviada! Aguarde o retorno do estabelecimento.";
-        msg.style.color = "green";
+        const btn = document.getElementById("btnInteresse");
+        btn.disabled = true;
+        try {
+          const texto = document.getElementById("mensagemInteresse").value.trim();
+          if (!texto) {
+            btn.disabled = false;
+            return alert("Digite uma mensagem antes de enviar.");
+          }
+          const Interesse = Parse.Object.extend("Interesse");
+          const i = new Interesse();
+          i.set("client", clientProfile);
+          i.set("establishment", est);
+          i.set("message", texto);
+          await i.save();
+          btn.disabled = false;
+          msg.textContent = "Mensagem enviada! Aguarde o retorno do estabelecimento.";
+          msg.style.color = "green";
+        } catch (err) {
+          console.error(err);
+          btn.disabled = false;
+          msg.textContent = "Erro ao enviar mensagem.";
+          msg.style.color = "red";
+        }
       });
     }
   } catch (err) {
@@ -192,6 +205,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // === Confirma marcação ===
     document.getElementById("confirmarMarcar").onclick = async () => {
+      const btn = document.getElementById("confirmarMarcar");
+      btn.disabled = true;
       try {
         const novo = new Parse.Object("Appointment");
         novo.set("client", cliente);
@@ -200,10 +215,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         novo.set("endDate", new Date(selectedSlot.getTime() + 60 * 60 * 1000));
         await novo.save();
         fecharModal(modalMarcar);
+        btn.disabled = false;
         alert("Consulta marcada com sucesso!");
         inicializarAgenda(estabelecimento, cliente);
       } catch (e) {
         console.error(e);
+        btn.disabled = false;
         alert("Erro ao marcar consulta.");
       }
     };
@@ -213,16 +230,20 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // === Confirma cancelamento ===
     document.getElementById("confirmarCancelar").onclick = async (e) => {
+      const btn = document.getElementById("confirmarCancelar");
+      btn.disabled = true;
       const id = e.target.getAttribute("data-id");
       try {
         const ap = new Parse.Query("Appointment");
         const ag = await ap.get(id);
         await ag.destroy();
         fecharModal(modalCancelar);
+        btn.disabled = false;
         alert("Consulta cancelada.");
         inicializarAgenda(estabelecimento, cliente);
       } catch (error) {
         console.error(error);
+        btn.disabled = false;
         alert("Erro ao cancelar consulta.");
       }
     };

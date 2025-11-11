@@ -73,6 +73,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   document.getElementById('saveSchedule').addEventListener('click', async () => {
+    const btn = document.getElementById('saveSchedule');
+    btn.disabled = true;
+    
     const ids = ['monStart','monEnd','tueStart','tueEnd','wedStart','wedEnd','thuStart','thuEnd','friStart','friEnd','satStart','satEnd','sunStart','sunEnd'];
     const days = ['mon','tue','wed','thu','fri','sat','sun'];
     const newWH = {};
@@ -85,6 +88,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     profObj.set('workingHours', workingHours);
     await profObj.save();
     document.getElementById('modalSchedule').style.display = 'none';
+    btn.disabled = false;
     alert('Horários salvos.');
   });
 
@@ -114,11 +118,18 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   document.getElementById('addBlocked').addEventListener('click', async () => {
+    const btn = document.getElementById('addBlocked');
+    btn.disabled = true;
+    
     const v = document.getElementById('blockedDateInput').value;
-    if (!v) return alert('Escolha uma data');
+    if (!v) {
+      btn.disabled = false;
+      return alert('Escolha uma data');
+    }
     if (!blockedDates.includes(v)) blockedDates.push(v);
     profObj.set('blockedDates', blockedDates);
     await profObj.save();
+    btn.disabled = false;
     openBlockedModal();
   });
 
@@ -207,20 +218,30 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // === Salvar Consulta ===
   document.getElementById("salvarConsulta").addEventListener("click", async () => {
+    const btn = document.getElementById("salvarConsulta");
+    btn.disabled = true;
+    
     const clienteId = document.getElementById("clienteSelect").value;
     const dataStr = document.getElementById("dataConsulta").value;
     const descontar = document.getElementById("descontarCredito").checked;
 
-    if (!clienteId || !dataStr) return alert("Preencha todos os campos.");
+    if (!clienteId || !dataStr) {
+      btn.disabled = false;
+      return alert("Preencha todos os campos.");
+    }
 
     const start = new Date(dataStr);
     const now = new Date();
-    if (start < now) return alert("Não é possível agendar consultas em horários passados.");
+    if (start < now) {
+      btn.disabled = false;
+      return alert("Não é possível agendar consultas em horários passados.");
+    }
 
     const end = new Date(start.getTime() + 30 * 60 * 1000);
 
     // Verifica bloqueio e horário de trabalho
     if (isDateBlocked(start,end)) {
+      btn.disabled = false;
       return alert('O horário selecionado está fora do horário de trabalho ou é uma data bloqueada.');
     }
 
@@ -231,7 +252,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     overlapQ.lessThan("date", end);
     overlapQ.greaterThan("endDate", start);
     const overlap = await overlapQ.first();
-    if (overlap) return alert('Já existe uma consulta neste horário.');
+    if (overlap) {
+      btn.disabled = false;
+      return alert('Já existe uma consulta neste horário.');
+    }
 
     // Criação do objeto
     const Cliente = Parse.Object.extend("ClientProfile");
@@ -270,11 +294,15 @@ document.addEventListener("DOMContentLoaded", async () => {
     });
 
     document.getElementById("modalAdd").style.display = "none";
+    btn.disabled = false;
     alert("Consulta adicionada!");
   });
 
   // === Excluir Consulta ===
   document.getElementById("confirmarDel").addEventListener("click", async () => {
+    const btn = document.getElementById("confirmarDel");
+    btn.disabled = true;
+    
     const devolver = document.getElementById("devolverCredito").checked;
 
     try {
@@ -311,9 +339,12 @@ document.addEventListener("DOMContentLoaded", async () => {
   await criarNotificacaoParaCliente(cli, "Uma consulta foi removida da sua agenda pelo profissional.");
       }
 
+      document.getElementById("modalDel").style.display = "none";
+      btn.disabled = false;
       alert("Consulta removida!");
     } catch (e) {
       console.error(e);
+      btn.disabled = false;
       alert("Erro ao excluir consulta.");
     }
 
@@ -340,8 +371,14 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // === Exportar PDF ===
   document.getElementById("btnExport").addEventListener("click", async () => {
+    const btn = document.getElementById("btnExport");
+    btn.disabled = true;
+    
     const eventos = calendar.getEvents();
-    if (!eventos.length) return alert("Sem eventos para exportar.");
+    if (!eventos.length) {
+      btn.disabled = false;
+      return alert("Sem eventos para exportar");
+    }
 
     const linhas = eventos.map(e =>
       `${e.start.toLocaleDateString()} ${e.start.toLocaleTimeString()} - ${e.title}`
@@ -418,6 +455,7 @@ document.addEventListener("DOMContentLoaded", async () => {
       link.download = 'agenda-semana.txt';
       link.click();
     }
+    btn.disabled = false;
   });
 
   // === Fechar Modais ===

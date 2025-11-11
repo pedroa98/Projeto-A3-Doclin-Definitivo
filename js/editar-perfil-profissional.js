@@ -8,6 +8,8 @@ document.addEventListener("DOMContentLoaded", async () => {
     return;
   }
 
+  const DEFAULT_AVATAR = "assets/semfoto.jpg"; // 👈 foto padrão
+
   const ProfessionalProfile = Parse.Object.extend("ProfessionalProfile");
   const query = new Parse.Query(ProfessionalProfile);
   query.equalTo("user", user);
@@ -54,10 +56,19 @@ document.addEventListener("DOMContentLoaded", async () => {
     campos.online.value = perfil.get("attendsOnline") ? "true" : "false";
     campos.presencial.value = perfil.get("attendsInPerson") ? "true" : "false";
     campos.preco.value = perfil.get("price") || "";
-    if (perfil.get("photo")) {
-      campos.preview.src = perfil.get("photo").url();
+
+    // 👇 exibição da foto: usa photo (Parse.File) > photoUrl > DEFAULT_AVATAR
+    const fotoFile = perfil.get("photo");
+    const fotoUrl = perfil.get("photoUrl");
+    if (fotoFile) {
+      campos.preview.src = fotoFile.url();
       campos.preview.style.display = "block";
-      campos.removerFotoBtn.style.display = "inline-block";
+      campos.removerFotoBtn.style.display = "inline-block"; // só mostra remover quando há Parse.File
+    } else {
+      campos.preview.src = fotoUrl || DEFAULT_AVATAR;
+      campos.preview.style.display = "block";
+      // mantém botão de remover oculto se for apenas URL padrão
+      campos.removerFotoBtn.style.display = fotoUrl ? "none" : "none";
     }
   }
 
@@ -77,7 +88,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     try {
       perfil.unset("photo");
       await perfil.save();
-      campos.preview.style.display = "none";
+      // após remover a foto de arquivo, mostra a padrão (ou photoUrl se já houver)
+      const fotoUrl = perfil.get("photoUrl");
+      campos.preview.src = fotoUrl || DEFAULT_AVATAR;
+      campos.preview.style.display = "block";
+      // botão remover deixa de aparecer porque não há mais Parse.File
       campos.removerFotoBtn.style.display = "none";
       campos.mensagem.textContent = "Foto removida com sucesso!";
       campos.mensagem.style.color = "#e67e22";
@@ -111,6 +126,13 @@ document.addEventListener("DOMContentLoaded", async () => {
         const parseFile = new Parse.File(file.name, file);
         await parseFile.save();
         perfil.set("photo", parseFile);
+        // opcional: se subir arquivo, pode limpar photoUrl antigo
+        // perfil.unset("photoUrl");
+      } else {
+        // 👇 se não há upload e também não existe foto nem photoUrl, define a padrão
+        if (!perfil.get("photo") && !perfil.get("photoUrl")) {
+          perfil.set("photoUrl", DEFAULT_AVATAR);
+        }
       }
 
       await perfil.save();

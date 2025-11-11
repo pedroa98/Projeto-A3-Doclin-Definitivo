@@ -107,9 +107,15 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // === SALVAR CONSULTA ===
   document.getElementById("salvarConsulta").addEventListener("click", async () => {
+    const btn = document.getElementById("salvarConsulta");
+    btn.disabled = true;
+    
     const clienteId = document.getElementById("clienteSelect").value;
     const dataStr = document.getElementById("dataConsulta").value;
-    if (!clienteId || !dataStr) return alert("Preencha todos os campos.");
+    if (!clienteId || !dataStr) {
+      btn.disabled = false;
+      return alert("Preencha todos os campos.");
+    }
 
     const start = new Date(dataStr);
     const end = new Date(start.getTime() + 30 * 60 * 1000);
@@ -117,48 +123,68 @@ document.addEventListener("DOMContentLoaded", async () => {
     const diaSemana = start.getDay();
     const horaInicio = start.toTimeString().slice(0, 5);
 
-    if (start < new Date()) return alert("Não é possível agendar no passado.");
-    if (blockedDate.some((b) => b.date === dataIso))
+    if (start < new Date()) {
+      btn.disabled = false;
+      return alert("Não é possível agendar no passado.");
+    }
+    if (blockedDate.some((b) => b.date === dataIso)) {
+      btn.disabled = false;
       return alert("Essa data está bloqueada.");
+    }
 
     const dentroDoExpediente =
       workingHours &&
       workingHours.daysOfWeek?.includes(diaSemana) &&
       horaInicio >= workingHours.startTime &&
       horaInicio < workingHours.endTime;
-    if (!dentroDoExpediente)
+    if (!dentroDoExpediente) {
+      btn.disabled = false;
       return alert("Fora do horário de trabalho do estabelecimento.");
+    }
 
     const conflito = calendar.getEvents().some(
       (ev) => start < ev.end && end > ev.start
     );
-    if (conflito) return alert("Horário já ocupado.");
+    if (conflito) {
+      btn.disabled = false;
+      return alert("Horário já ocupado.");
+    }
 
-    const Cliente = Parse.Object.extend("ClientProfile");
-    const cli = await new Parse.Query(Cliente).get(clienteId);
-    const Appointment = Parse.Object.extend("Appointment");
-    const ap = new Appointment();
-    ap.set("establishment", estObj);
-    ap.set("client", cli);
-    ap.set("date", start);
-    ap.set("endDate", end);
-    ap.set("status", "agendada");
-    ap.set("createdBy", "establishment");
-    await ap.save(null, { sessionToken: user.getSessionToken() });
+    try {
+      const Cliente = Parse.Object.extend("ClientProfile");
+      const cli = await new Parse.Query(Cliente).get(clienteId);
+      const Appointment = Parse.Object.extend("Appointment");
+      const ap = new Appointment();
+      ap.set("establishment", estObj);
+      ap.set("client", cli);
+      ap.set("date", start);
+      ap.set("endDate", end);
+      ap.set("status", "agendada");
+      ap.set("createdBy", "establishment");
+      await ap.save(null, { sessionToken: user.getSessionToken() });
 
-    calendar.addEvent({
-      title: "Consulta - " + cli.get("name"),
-      start,
-      end,
-      backgroundColor: "#2ecc71",
-    });
+      calendar.addEvent({
+        title: "Consulta - " + cli.get("name"),
+        start,
+        end,
+        backgroundColor: "#2ecc71",
+      });
 
-    document.getElementById("modalAdd").style.display = "none";
-    alert("Consulta adicionada!");
+      document.getElementById("modalAdd").style.display = "none";
+      btn.disabled = false;
+      alert("Consulta adicionada!");
+    } catch (err) {
+      console.error("Erro ao salvar consulta:", err);
+      btn.disabled = false;
+      alert("Erro ao salvar consulta.");
+    }
   });
 
   // === EXCLUIR CONSULTA (corrigido com sessionToken + fallback) ===
   document.getElementById("confirmarDel").addEventListener("click", async () => {
+    const btn = document.getElementById("confirmarDel");
+    btn.disabled = true;
+    
     try {
       const Appointment = Parse.Object.extend("Appointment");
       const q = new Parse.Query(Appointment);
@@ -174,6 +200,9 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
         if (evObj && typeof evObj.remove === 'function') evObj.remove();
       } catch (uiErr) { console.warn('Falha ao remover evento da UI:', uiErr); }
+      
+      document.getElementById("modalDel").style.display = "none";
+      btn.disabled = false;
       alert("Consulta removida com sucesso!");
     } catch (err) {
       console.error("❌ Erro ao excluir consulta:", err);
@@ -197,20 +226,20 @@ document.addEventListener("DOMContentLoaded", async () => {
               }
               if (evObj && typeof evObj.remove === 'function') evObj.remove();
             } catch (uiErr) { console.warn('Falha ao remover evento da UI (REST):', uiErr); }
+            document.getElementById("modalDel").style.display = "none";
+            btn.disabled = false;
             alert("Consulta removida via fallback REST!");
           } else {
             const errData = await res.json();
+            btn.disabled = false;
             alert(`Erro ao apagar (REST): ${errData.error || res.statusText}`);
           }
-        } else {
-          alert("Erro de permissão. Verifique ACL no painel do Parse.");
         }
       } catch (restErr) {
         console.error("Erro REST:", restErr);
+        btn.disabled = false;
         alert("Erro ao excluir consulta no servidor.");
       }
-    } finally {
-      document.getElementById("modalDel").style.display = "none";
     }
   });
 
@@ -228,6 +257,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   document
     .getElementById("formSchedule")
     .addEventListener("submit", async (e) => {
+      const btn = e.target.querySelector('button[type="submit"]');
+      btn.disabled = true;
       e.preventDefault();
 
       const dias = Array.from(
@@ -237,10 +268,18 @@ document.addEventListener("DOMContentLoaded", async () => {
       const startTime = document.getElementById("inicioHorario").value;
       const endTime = document.getElementById("fimHorario").value;
 
-      if (!dias.length) return alert("Selecione ao menos um dia.");
-      if (!startTime || !endTime) return alert("Informe os horários.");
-      if (endTime <= startTime)
+      if (!dias.length) {
+        btn.disabled = false;
+        return alert("Selecione ao menos um dia.");
+      }
+      if (!startTime || !endTime) {
+        btn.disabled = false;
+        return alert("Informe os horários.");
+      }
+      if (endTime <= startTime) {
+        btn.disabled = false;
         return alert("O horário final deve ser maior que o inicial.");
+      }
 
       try {
         const novoHorario = { daysOfWeek: dias, startTime, endTime };
@@ -253,10 +292,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         ]);
 
         console.log("✅ Horários de trabalho salvos:", workingHours);
-        alert("Horários de trabalho atualizados!");
         document.getElementById("modalSchedule").style.display = "none";
+        btn.disabled = false;
+        alert("Horários de trabalho atualizados!");
       } catch (err) {
         console.error("Erro ao salvar horários:", err);
+        btn.disabled = false;
         alert("Erro ao salvar horários no servidor.");
       }
     });
@@ -273,33 +314,49 @@ document.addEventListener("DOMContentLoaded", async () => {
     );
 
   document.getElementById("salvarBloqueio").addEventListener("click", async () => {
+    const btn = document.getElementById("salvarBloqueio");
+    btn.disabled = true;
+    
     const data = document.getElementById("dataBloqueio").value;
     const motivo = document.getElementById("motivoBloqueio").value.trim();
-    if (!data) return alert("Selecione uma data.");
+    if (!data) {
+      btn.disabled = false;
+      return alert("Selecione uma data.");
+    }
 
     try {
-      if (blockedDate.some((b) => b.date === data))
+      if (blockedDate.some((b) => b.date === data)) {
+        btn.disabled = false;
         return alert("Essa data já está bloqueada.");
+      }
 
       blockedDate.push({ date: data, reason: motivo || "Bloqueio manual" });
       estObj.set("blockedDate", blockedDate);
       await estObj.save(null, { sessionToken: user.getSessionToken() });
 
       console.log("✅ Bloqueios salvos:", blockedDate);
-      alert("Data bloqueada com sucesso!");
       document.getElementById("modalBlock").style.display = "none";
+      btn.disabled = false;
+      alert("Data bloqueada com sucesso!");
       calendar.refetchEvents();
       calendar.render();
     } catch (err) {
       console.error("Erro ao salvar bloqueio:", err);
+      btn.disabled = false;
       alert("Erro ao salvar bloqueio no servidor.");
     }
   });
 
   // === EXPORTAR PDF ===
   document.getElementById("btnExport").addEventListener("click", async () => {
+    const btn = document.getElementById("btnExport");
+    btn.disabled = true;
+    
     const eventos = calendar.getEvents();
-    if (!eventos.length) return alert("Sem eventos para exportar.");
+    if (!eventos.length) {
+      btn.disabled = false;
+      return alert("Sem eventos para exportar.");
+    }
 
     try {
       const { jsPDF } = window.jspdf;
@@ -318,8 +375,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         body: rows,
       });
       doc.save("agenda-semana.pdf");
+      btn.disabled = false;
     } catch (err) {
       console.error("Erro ao exportar PDF:", err);
+      btn.disabled = false;
       alert("Erro ao gerar o PDF.");
     }
   });

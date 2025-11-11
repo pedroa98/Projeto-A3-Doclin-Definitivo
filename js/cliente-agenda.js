@@ -56,8 +56,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   // Export using AutoTable
   document.getElementById('btnExport').addEventListener('click', async () => {
+    const btn = document.getElementById('btnExport');
+    btn.disabled = true;
+    
     const eventos = calendar.getEvents();
-    if (!eventos.length) return alert('Sem eventos para exportar.');
+    if (!eventos.length) {
+      btn.disabled = false;
+      return alert('Sem eventos para exportar.');
+    }
     try {
       const jsPDF = (window.jspdf && window.jspdf.jsPDF) ? window.jspdf.jsPDF : null;
       if (!jsPDF) throw new Error('jsPDF não carregado');
@@ -69,8 +75,10 @@ document.addEventListener('DOMContentLoaded', async () => {
       doc.text('Minhas Consultas', 40, 50);
       doc.autoTable({ startY: 70, head: [['Data','Hora','Compromisso','Prof/Est']], body: rows, styles:{ fontSize:10 } });
       doc.save('agenda-cliente.pdf');
+      btn.disabled = false;
     } catch (err) {
       console.error('Erro exportando PDF (cliente):', err);
+      btn.disabled = false;
       const blob = new Blob([eventos.map(e=> `${e.start.toLocaleString()} - ${e.title}`).join('\n')], { type: 'text/plain' });
       const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'agenda-cliente.txt'; a.click();
     }

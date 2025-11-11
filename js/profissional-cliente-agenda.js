@@ -56,20 +56,14 @@ document.addEventListener('DOMContentLoaded', async () => {
   let clientProfile = null;
   let relation = null;
   let currentAppointments = [];
-  // Horários e datas bloqueadas do profissional
   let workingHours = {};
   let blockedDates = [];
 
-  // 🔔 Cria uma notificação destinada ao profissional (originada por um cliente)
-  // Guarda o remetente em 'fromClient' para que o profissional saiba quem fez a ação,
-  // mas não define o ponteiro 'client' como destinatário para evitar que a notificação
-  // seja listada também no dashboard do cliente.
   async function criarNotificacaoParaProfissional(professional, clientProfile, mensagem, tipo) {
     try {
       const Notificacao = Parse.Object.extend('Notificacao');
       const notif = new Notificacao();
-      notif.set('professional', professional); // destinatário
-      // remetente
+      notif.set('professional', professional);
       try { notif.set('fromClient', clientProfile); } catch (e) { /* ignore */ }
       if (tipo) notif.set('type', tipo);
       notif.set('message', mensagem);
@@ -81,7 +75,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
-  // 🔹 Nome do cliente (para notificações)
   function nomeDoCliente() {
     try {
       return (
@@ -100,7 +93,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const profQ = new Parse.Query(Prof);
     prof = await profQ.get(profId);
 
-    // carregar horários bloqueados / working hours para validação
     try {
       workingHours = prof.get('workingHours') || {};
       blockedDates = prof.get('blockedDates') || [];
@@ -128,11 +120,9 @@ document.addEventListener('DOMContentLoaded', async () => {
       <p><strong>Tipo:</strong> ${prof.get('type') || 'Não informado'}</p>
       <p><strong>Conselho:</strong> ${prof.get('councilNumber') || 'Não informado'}</p>
       <p>💰 ${prof.get('price') ? 'R$ ' + prof.get('price').toFixed(2) : 'Preço não informado'}</p>
-  <p>📍 ${prof.get('address') || 'Endereço não informado'}</p>
-  <p>📧 ${prof.get('contactEmail') ? `<a href="mailto:${prof.get('contactEmail')}">${prof.get('contactEmail')}</a>` : 'E-mail não informado'}</p>
-  <p>📞 ${prof.get('phone') ? `<a href="tel:${prof.get('phone')}">${prof.get('phone')}</a>` : 'Telefone não informado'}</p>
-      <p>📧 ${prof.get('contactEmail') || 'E-mail não informado'}</p>
-      <p>📞 ${prof.get('phone') || 'Telefone não informado'}</p>
+      <p>📍 ${prof.get('address') || 'Endereço não informado'}</p>
+      <p>📧 ${prof.get('contactEmail') ? `<a href="mailto:${prof.get('contactEmail')}">${prof.get('contactEmail')}</a>` : 'E-mail não informado'}</p>
+      <p>📞 ${prof.get('phone') ? `<a href="tel:${prof.get('phone')}">${prof.get('phone')}</a>` : 'Telefone não informado'}</p>
     `;
 
     const ClientProfile = Parse.Object.extend('ClientProfile');
@@ -151,7 +141,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     const actions = document.createElement('div');
     actions.style.marginTop = '12px';
 
-    // botão de exportar agenda (visível quando a agenda é exibida)
     const exportBtn = document.createElement('button');
     exportBtn.className = 'btn btn-blue';
     exportBtn.id = 'btnExportPublic';
@@ -193,15 +182,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         const texto = prompt('Mensagem para o profissional (opcional):', 'Olá, gostaria de me vincular.');
         const Interesse = Parse.Object.extend('Interesse');
         const i = new Interesse();
-          i.set('client', clientProfile);
-          i.set('professional', prof);
-          i.set('message', texto || '');
-          await i.save();
-          // criar notificação para o profissional
-          try {
-            await criarNotificacaoParaProfissional(prof, clientProfile, `Novo interesse: ${texto || ''}`, 'interesse');
-          } catch (e) { console.warn('Falha ao notificar profissional sobre interesse:', e); }
-          alert('Interesse enviado ao profissional.');
+        i.set('client', clientProfile);
+        i.set('professional', prof);
+        i.set('message', texto || '');
+        await i.save();
+        try {
+          await criarNotificacaoParaProfissional(prof, clientProfile, `Novo interesse: ${texto || ''}`, 'interesse');
+        } catch (e) { console.warn('Falha ao notificar profissional sobre interesse:', e); }
+        alert('Interesse enviado ao profissional.');
       });
       actions.appendChild(btn);
       perfilEl.appendChild(actions);
@@ -243,7 +231,6 @@ document.addEventListener('DOMContentLoaded', async () => {
       },
       validRange: { start: new Date() },
       selectAllow: (selectInfo) => {
-        // Bloqueia horários passados, sobrepostos e fora do horário de trabalho / datas bloqueadas
         const nowOk = selectInfo.start >= new Date();
         const noOverlap = !currentAppointments.some(ev => (selectInfo.start < ev.end && selectInfo.end > ev.start));
         const notBlocked = !isDateBlocked(selectInfo.start, selectInfo.end);
@@ -272,14 +259,13 @@ document.addEventListener('DOMContentLoaded', async () => {
         title: `Consulta - ${cliente ? (cliente.get ? cliente.get('name') : cliente.name) : 'Cliente'}`,
         start: a.get('date'),
         end: a.get('endDate') || new Date(new Date(a.get('date')).getTime() + 30 * 60000),
-        backgroundColor: isMeu ? '#2ecc71' : '#3498db', // 🟩 verde se é do cliente, 🟦 azul se é de outro
+        backgroundColor: isMeu ? '#2ecc71' : '#3498db',
         borderColor: isMeu ? '#27ae60' : '#2980b9',
         extendedProps: { appointmentObj: a }
       };
     });
   }
 
-  // === Função auxiliar para checar se a data está bloqueada ou fora do horário de trabalho ===
   function isDateBlocked(start, end) {
     try {
       const yyyy = start.getFullYear();
@@ -291,7 +277,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const dayNames = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
       const day = dayNames[start.getDay()];
       const wh = workingHours[day];
-      if (!wh) return true; // sem horário definido -> fora do expediente
+      if (!wh) return true;
       const startHM = `${String(start.getHours()).padStart(2, '0')}:${String(start.getMinutes()).padStart(2, '0')}`;
       const endHM = `${String(end.getHours()).padStart(2, '0')}:${String(end.getMinutes()).padStart(2, '0')}`;
       return !(startHM >= wh[0] && endHM <= wh[1]);
@@ -330,15 +316,20 @@ document.addEventListener('DOMContentLoaded', async () => {
     modalMarcar.style.display = 'flex';
   }
 
+  // ✅ Alterado: evita cliques múltiplos e fecha modal antes do alerta
   confirmarMarcar.addEventListener('click', async () => {
     if (!selectedSlot) return;
-    // checagem extra de segurança (não confiar apenas no selectAllow)
+
+    confirmarMarcar.disabled = true;
+    modalMarcar.style.display = 'none';
+
     if (isDateBlocked(selectedSlot.start, selectedSlot.end)) {
       alert('O horário selecionado está fora do horário de trabalho ou é uma data bloqueada.');
-      modalMarcar.style.display = 'none';
+      confirmarMarcar.disabled = false;
       selectedSlot = null;
       return;
     }
+
     try {
       const Appointment = Parse.Object.extend('Appointment');
       const a = new Appointment();
@@ -359,12 +350,15 @@ document.addEventListener('DOMContentLoaded', async () => {
       relation.increment('sessionsUsed', 1);
       await relation.save();
 
-      modalMarcar.style.display = 'none';
       selectedSlot = null;
-      alert('Consulta agendada com sucesso!');
-      location.reload();
+
+      setTimeout(() => {
+        alert('Consulta agendada com sucesso!');
+        location.reload();
+      }, 300);
     } catch (err) {
       console.error('Erro criando appointment', err);
+      confirmarMarcar.disabled = false;
       alert('Erro ao agendar. Tente novamente.');
     }
   });
@@ -383,8 +377,11 @@ document.addEventListener('DOMContentLoaded', async () => {
     modalDetalhes.style.display = 'flex';
   }
 
+  // ✅ Alterado: fecha modal e evita cliques múltiplos antes do alerta
   btnApagarConsulta.addEventListener('click', async () => {
     if (!selectedAppointment) return;
+
+    btnApagarConsulta.disabled = true;
 
     try {
       const appt = await new Parse.Query('Appointment').get(selectedAppointment.id);
@@ -392,10 +389,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       if (!clientObj || clientObj.id !== clientProfile.id) {
         alert('Você não pode apagar consultas que não são suas.');
+        btnApagarConsulta.disabled = false;
         return;
       }
 
-      if (!confirm('Tem certeza que deseja apagar esta consulta?')) return;
+      if (!confirm('Tem certeza que deseja apagar esta consulta?')) {
+        btnApagarConsulta.disabled = false;
+        return;
+      }
 
       const apptDate = new Date(appt.get('date'));
       const now = new Date();
@@ -417,10 +418,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         'cancelamento'
       );
 
-      alert('Consulta apagada com sucesso.');
-      location.reload();
+      modalDetalhes.style.display = 'none';
+
+      setTimeout(() => {
+        alert('Consulta apagada com sucesso.');
+        location.reload();
+      }, 300);
     } catch (err) {
       console.error('Erro ao apagar consulta', err);
+      btnApagarConsulta.disabled = false;
       alert('Erro ao apagar consulta.');
     }
   });
