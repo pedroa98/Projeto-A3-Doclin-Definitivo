@@ -68,11 +68,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   function renderProfissional(p) {
     const nome = p.get("name") || "Profissional";
-    const desc = p.get("description") || "Sem descrição.";
+    const desc = p.get("type") || "Sem descrição.";
     const preco = p.get("price") ? `R$ ${p.get("price").toFixed(2)}` : "Preço não informado";
     const online = p.get("attendsOnline") ? "💻 Online" : "";
     const presencial = p.get("attendsInPerson") ? "🏥 Presencial" : "";
-    const foto = p.get("photo") ? p.get("photo").url() : "https://via.placeholder.com/350x200?text=Sem+Foto";
+    const foto = p.get("photo") ? p.get("photo").url() : "https://i.pinimg.com/originals/73/14/cc/7314cc1a88bf3cdc48347ab186e12e81.jpg";
 
     return `
       <div class="card" onclick="abrirPerfil('${p.id}')">
